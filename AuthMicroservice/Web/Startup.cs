@@ -1,4 +1,6 @@
-﻿namespace AuthMicroservice;
+﻿using AuthMicroservice.DataAccess;
+
+namespace AuthMicroservice.Web;
 
 public class Startup
 {
@@ -9,18 +11,17 @@ public class Startup
   public void ConfigureServices(IServiceCollection services)
   {
     services.AddControllers();
-
-    // register swagger
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
+
+    services.AddDatabaseContext(Configuration["AUTH_DB_CONNECTION_STRING"]!);
+    services.AddDatabaseMigration();
   }
 
   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
   {
     app.UseSwagger();
     if (env.IsDevelopment()) app.UseSwaggerUI();
-
-    //app.UseMiddleware<ErrorHandlingMiddleware>();
 
     app.UseRouting();
 

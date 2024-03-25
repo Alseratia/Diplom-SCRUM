@@ -1,4 +1,4 @@
-namespace AuthMicroservice;
+namespace AuthMicroservice.Web;
 
 public static class Program
 {

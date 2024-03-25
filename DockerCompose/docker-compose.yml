@@ -9,6 +9,17 @@ services:
       - "5050:5432"
     networks:
       - main-network
+      
+#  auth-service:
+#    container_name: "auth-service"
+#    build: "../AuthMicroservice/API"
+#    env_file:
+#      - auth-db.env
+#    networks:
+#      - main-network
+#    depends_on: 
+#      - auth-db
+      
   chats-db:
     container_name: "chats-db"
     image: postgres:16-alpine
@@ -18,6 +29,7 @@ services:
       - "5051:5432"
     networks:
       - main-network
+      
   content-db:
     container_name: "content-db"
     image: redis:7.2.4-alpine
