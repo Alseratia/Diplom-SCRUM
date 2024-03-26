@@ -39,11 +39,17 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AccessToken");
 
                     b.HasIndex("RefreshToken");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Tokens");
                 });
@@ -54,7 +60,7 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Login")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -75,26 +81,23 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Login");
-
-                    b.HasIndex("TokensId")
-                        .IsUnique();
+                    b.HasIndex("Email");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("AuthMicroservice.DataAccess.Models.User", b =>
-                {
-                    b.HasOne("AuthMicroservice.DataAccess.Models.Tokens", "Tokens")
-                        .WithOne("User")
-                        .HasForeignKey("AuthMicroservice.DataAccess.Models.User", "TokensId");
-
-                    b.Navigation("Tokens");
-                });
-
             modelBuilder.Entity("AuthMicroservice.DataAccess.Models.Tokens", b =>
                 {
+                    b.HasOne("AuthMicroservice.DataAccess.Models.User", "User")
+                        .WithOne("Tokens")
+                        .HasForeignKey("AuthMicroservice.DataAccess.Models.Tokens", "UserId");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AuthMicroservice.DataAccess.Models.User", b =>
+                {
+                    b.Navigation("Tokens");
                 });
 #pragma warning restore 612, 618
         }

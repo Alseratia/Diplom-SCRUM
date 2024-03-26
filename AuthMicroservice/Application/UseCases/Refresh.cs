@@ -1,6 +1,9 @@
 ﻿namespace Application.UseCases;
 
-public class Refresh
+public partial class UseCases
 {
-  
+  public static void Refresh()
+  {
+    
+  }
 }

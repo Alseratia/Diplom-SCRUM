@@ -1,4 +1,5 @@
-﻿using AuthMicroservice.DataAccess;
+﻿using Application;
+using AuthMicroservice.DataAccess;
 
 namespace AuthMicroservice.Web;
 
@@ -14,8 +15,10 @@ public class Startup
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
 
-    services.AddDatabaseContext(Configuration["AUTH_DB_CONNECTION_STRING"]!);
+    services.AddPostgreSQLDataAccess(Configuration["AUTH_DB_CONNECTION_STRING"]!);
     services.AddDatabaseMigration();
+
+    services.AddApplicationLayer();
   }
 
   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -14,7 +14,7 @@ public class Tokens
   public string RefreshToken { get; set; } = null!;
   public DateTime ExpiresAt { get; set; }
   
-
-  [InverseProperty("Tokens")]
+  public Guid? UserId { get; set; }
+  [ForeignKey("UserId")]
   public User? User { get; set; }
 }
