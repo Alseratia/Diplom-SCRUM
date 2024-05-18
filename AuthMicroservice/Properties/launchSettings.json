@@ -1,0 +1,15 @@
+﻿{
+  "profiles": {
+    "AuthMicroservice": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:5010",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AUTH_DB_CONNECTION_STRING": "Server=127.0.0.1;Port=5050;Database=postgres;User Id=postgres;Password=123321;"
+      }
+    }
+  }
+}

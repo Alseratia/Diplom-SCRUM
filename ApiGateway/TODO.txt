@@ -1,0 +1,4 @@
+﻿- Ocelot.Administration для чего?
+- Ocelot.RateLimit
+- Ocelot.Kubernetes
+- Ocelot.CahceManager
