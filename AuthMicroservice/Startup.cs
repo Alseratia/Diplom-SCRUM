@@ -1,5 +1,6 @@
 ﻿
 using AuthMicroservice.DataAccess;
+using AuthMicroservice.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,12 +22,12 @@ public class Startup
     services.AddSwaggerGen();
 
     // DatabaseContext
-    var stringCon = Configuration["AUTH_DB_CONNECTION_STRING"]!;
     services.AddAuthMicroserviceDatabaseContext(Configuration["AUTH_DB_CONNECTION_STRING"]!);
     services.AddDatabaseMigration();
     
     //UseCases
-    services.AddScoped<UseCases>();
+    services.AddScoped<UserService>();
+    services.AddJwtAuthentication();
   }
 
   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -36,9 +37,11 @@ public class Startup
       app.UseSwagger();
       app.UseSwaggerUI();
     }
-
+    
     app.UseRouting();
-    app.UseStaticFiles();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
     
     app.UseEndpoints(endpoints =>
     {

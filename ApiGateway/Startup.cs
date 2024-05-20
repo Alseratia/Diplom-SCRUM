@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AuthMicroservice;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ public class Startup
   
   public void ConfigureServices(IServiceCollection services)
   {
+    services.AddJwtAuthentication();
     services.AddOcelot(Configuration);
 
     services.AddControllers();
@@ -34,6 +36,10 @@ public class Startup
     }
 
     app.UseRouting();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+    
     app.UseOcelot().Wait();
     
     app.UseEndpoints(endpoints =>

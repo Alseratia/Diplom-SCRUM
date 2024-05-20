@@ -7,6 +7,7 @@ public static class Program
 {
   public static void Main(string[] args)
   {
+    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     var app = CreateHostBuilder(args).Build();
     app.Run();
   }

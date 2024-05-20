@@ -5,6 +5,12 @@ namespace AuthMicroservice.Utils;
 
 public static class HashService
 {
+  public static bool IsPasswordEquals(string password, string dbPasswordHash, string dbPasswordSalt)
+  {
+    var hashPassword = GenerateHash(password, dbPasswordSalt);
+    return dbPasswordHash == hashPassword;
+  }
+  
   public static string GenerateHash(string password, string salt)
   {
     var passwordBytes = Encoding.UTF8.GetBytes(password + salt);

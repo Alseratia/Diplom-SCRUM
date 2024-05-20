@@ -12,6 +12,7 @@ public class ApplicationDbContext : DbContext
   public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :
     base(options)
   { }
+  
   public User CreateUser(string email, string password, string name)
   {
     var salt = HashService.GenerateSalt();
@@ -29,31 +30,15 @@ public class ApplicationDbContext : DbContext
     return user;
   }
 
-  public async Task <User?> GetUserById(Guid id)
+  public async Task<User?> GetUserById(Guid id)
   {
-    return await Users.FindAsync(id);
+    return await Users.Include(x => x.Tokens)
+      .FirstOrDefaultAsync(x => x.Id == id);
   }
 
   public async Task<User?> GetByEmail(string email)
   {
     return await Users.Include(x => x.Tokens)
       .FirstOrDefaultAsync(x => x.Email == email);
-  }
-  
-  
-  public async Task<Tokens> NewTokens(Guid userId)
-  {
-    var dbUser = await GetUserById(userId);
-
-    if (dbUser == null) throw new Exception("User not found");
-
-    var newTokens = new Tokens();
-    newTokens.User = dbUser;
-    
-    dbUser.Tokens = newTokens;
-    
-    await SaveChangesAsync();
-    
-    return newTokens;
   }
 }

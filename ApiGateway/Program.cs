@@ -16,7 +16,8 @@ public static class Program
     Host.CreateDefaultBuilder(args)
       .ConfigureAppConfiguration((_, config) =>
       {
-        config.AddJsonFile("ocelot.json");
+        config.AddJsonFile("ocelot.json")
+              .AddJsonFile("ocelot.auth-microservice.json");
       })
       .ConfigureWebHostDefaults(webBuilder =>
       {

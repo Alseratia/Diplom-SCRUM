@@ -1,4 +1,5 @@
-﻿using AuthMicroservice.DTO;
+﻿using AuthMicroservice.Controllers.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthMicroservice.Controllers;
@@ -7,30 +8,32 @@ namespace AuthMicroservice.Controllers;
 [Route("api/v1")]
 public class AuthController : ControllerBase
 {
-  private readonly UseCases _useCases;
-  public AuthController(UseCases useCases) => _useCases = useCases;
+  private readonly UserService _userService;
+  public AuthController(UserService userService) => (_userService) = (userService);
 
+  
   [HttpPost("register")]
-  public async Task<ActionResult<CreateUserDto>> CreateUser([FromBody] RegisterRequest registerRequest)
+  public async Task<ActionResult<RegisterResponse>> Register([FromBody] RegisterRequest registerRequest)
   {
-    return await _useCases.CreateUser(registerRequest.Email, registerRequest.Password, registerRequest.Name);
+    return await _userService.Register(registerRequest.Email, registerRequest.Password, registerRequest.Name);
   }
   
   [HttpPost("login")]
-  public async Task<ActionResult<NewTokensDto>> Login([FromBody] LoginRequest loginRequest)
+  public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest loginRequest)
   {
-    return await _useCases.NewTokens(loginRequest.Email, loginRequest.Password);
-  }
-  
-  [HttpPost("authorize")]
-  public async Task<ActionResult> Authorize([FromBody] AuthorizeRequest authorizeRequest)
-  {
-    return await _useCases.Authorize(authorizeRequest.access_token);
+    return await _userService.Login(loginRequest.Email, loginRequest.Password);
   }
   
   [HttpPost("refresh")]
-  public async Task<ActionResult> Refresh([FromBody] RefreshRequest refreshRequestAuth)
+  public async Task<ActionResult<LoginResponse>> Refresh([FromBody] RefreshRequest refreshRequest)
   {
-    return await _useCases.Refresh();
+    return await _userService.RefreshTokens(HttpContext.User, refreshRequest.RefreshToken);
+  }
+  
+  [HttpGet("test")]
+  public ActionResult TestEndpoint()
+  {
+    var claims = HttpContext.User;
+    return Ok();
   }
 }
