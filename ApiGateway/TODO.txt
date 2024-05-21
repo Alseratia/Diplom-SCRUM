@@ -4,3 +4,4 @@
 - Ocelot.CahceManager
 
 - ASP.NET Identity для безопасности из книжки
+- HTTPS

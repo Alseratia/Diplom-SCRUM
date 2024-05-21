@@ -9,9 +9,6 @@ services:
       - "7003:80"
     networks:
       - main-network
-    depends_on:
-      - auth-microservice
-      
       
   auth-microservice:
     image: auth-microservice

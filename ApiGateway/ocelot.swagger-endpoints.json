@@ -7,7 +7,7 @@
         {
           "Name": "AuthMicroservice API",
           "Version": "v1",
-          "Url": "https://localhost:5010/swagger/v1/swagger.json"
+          "Url": "http://auth-microservice:80/swagger/v1/swagger.json"
         }
       ]
     },
@@ -18,7 +18,7 @@
         {
           "Name": "Gateway API",
           "Version": "v1",
-          "Url": "https://localhost:7003/swagger/v1/swagger.json"
+          "Url": "http://localhost:80/swagger/v1/swagger.json"
         }
       ]
     }

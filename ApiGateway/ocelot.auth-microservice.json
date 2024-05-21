@@ -4,11 +4,11 @@
     {
       "SwaggerKey": "AuthMicroservice",
       "DownstreamPathTemplate": "/api/v1/register",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "auth-microservice",
-          "Port": 5010
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/v1/register",
@@ -18,11 +18,11 @@
     {
       "SwaggerKey": "AuthMicroservice",
       "DownstreamPathTemplate": "/api/v1/login",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "auth-microservice",
-          "Port": 5010
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/v1/login",
@@ -32,15 +32,29 @@
     {
       "SwaggerKey": "AuthMicroservice",
       "DownstreamPathTemplate": "/api/v1/refresh",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "auth-microservice",
-          "Port": 5010
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/v1/refresh",
       "UpstreamHttpMethod": [ "POST" ]
+    },
+
+    {
+      "SwaggerKey": "AuthMicroservice",
+      "DownstreamPathTemplate": "/api/v1/test",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "auth-microservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/test",
+      "UpstreamHttpMethod": [ "GET" ]
     }
     
   ]
