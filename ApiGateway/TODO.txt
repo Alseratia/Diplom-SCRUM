@@ -2,3 +2,5 @@
 - Ocelot.RateLimit
 - Ocelot.Kubernetes
 - Ocelot.CahceManager
+
+- ASP.NET Identity для безопасности из книжки

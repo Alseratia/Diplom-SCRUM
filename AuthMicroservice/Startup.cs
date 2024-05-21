@@ -27,21 +27,17 @@ public class Startup
     
     //UseCases
     services.AddScoped<UserService>();
-    services.AddJwtAuthentication();
   }
 
   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
   {
-    if (env.IsDevelopment())
-    {
-      app.UseSwagger();
-      app.UseSwaggerUI();
-    }
+    app.UseHttpsRedirection();
+    
+    app.UseStaticFiles();
+    
+    app.UseSwagger();
     
     app.UseRouting();
-
-    app.UseAuthentication();
-    app.UseAuthorization();
     
     app.UseEndpoints(endpoints =>
     {

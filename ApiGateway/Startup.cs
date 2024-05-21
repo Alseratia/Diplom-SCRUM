@@ -1,9 +1,11 @@
-﻿using AuthMicroservice;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -17,7 +19,25 @@ public class Startup
   
   public void ConfigureServices(IServiceCollection services)
   {
-    services.AddJwtAuthentication();
+    
+    services.AddAuthentication(o =>
+      {
+        o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+      })
+      .AddJwtBearer(o =>
+      {
+        o.RequireHttpsMetadata = false;
+        o.SaveToken = true;
+        o.TokenValidationParameters = new TokenValidationParameters()
+        {
+          ValidateIssuerSigningKey = true,
+          ValidateIssuer = false,
+          ValidateAudience = false,
+          IssuerSigningKey = new SymmetricSecurityKey("12DD91672632AF1E01A5896DA559E8F7"u8.ToArray())
+        };
+      });
+    
     services.AddOcelot(Configuration);
 
     services.AddControllers();
@@ -29,12 +49,15 @@ public class Startup
 
   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
   {
-    if (env.IsDevelopment())
-    {
+    app.UseStaticFiles();
+    // if (env.IsDevelopment())
+    // {
       app.UseSwagger();
       app.UseSwaggerForOcelotUI();
-    }
-
+    // }
+    
+    app.UseHttpsRedirection();
+    
     app.UseRouting();
 
     app.UseAuthentication();

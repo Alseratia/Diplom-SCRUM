@@ -1,21 +1,19 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["AuthMicroservice/API/API.csproj", "AuthMicroservice/API/"]
-COPY ["AuthMicroservice/Infrastructure/Infrastructure.csproj", "AuthMicroservice/Infrastructure/"]
-RUN dotnet restore "AuthMicroservice/API/API.csproj"
+COPY ["AuthMicroservice/AuthMicroservice.csproj", "AuthMicroservice/"]
+RUN dotnet restore "AuthMicroservice/AuthMicroservice.csproj"
 COPY . .
-WORKDIR "/src/AuthMicroservice/API"
-RUN dotnet build "API.csproj" -c Release -o /app/build
+WORKDIR "/src/AuthMicroservice"
+RUN dotnet build "AuthMicroservice.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "AuthMicroservice.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "API.dll"]
+ENTRYPOINT ["dotnet", "AuthMicroservice.dll"]

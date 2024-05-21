@@ -1,9 +1,7 @@
-﻿using System.Security.Claims;
-using AuthMicroservice.Controllers.Responses;
+﻿using AuthMicroservice.Controllers.Responses;
 using AuthMicroservice.DataAccess;
 using AuthMicroservice.DataAccess.Models;
 using AuthMicroservice.Utils;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,16 +40,14 @@ public class UserService
       };
   }
   
-  public async Task<ActionResult<LoginResponse>> RefreshTokens(ClaimsPrincipal claims, string refreshToken)
+  public async Task<ActionResult<LoginResponse>> RefreshTokens(string accessToken, string refreshToken)
   {
     //проверка из контекста
-    var userId = claims.Claims.FirstOrDefault(x => x.Type == "UserId");
-    if (userId == null) return new UnauthorizedResult();
-    
-    var user = await _db.GetUserById(Guid.Parse(userId.Value));
-    if (user == null || user.Tokens?.RefreshToken != refreshToken) return new UnauthorizedResult();
+    var tokens = await _db.Tokens.Include(x => x.User)
+      .SingleOrDefaultAsync(x => x.AccessToken == accessToken && x.RefreshToken == refreshToken);
+    if (tokens == null || tokens.User == null) return new UnauthorizedResult();
 
-    var tokens = await CreateUserTokens(user);
+    tokens = await CreateUserTokens(tokens.User);
 
     return new LoginResponse()
     { 

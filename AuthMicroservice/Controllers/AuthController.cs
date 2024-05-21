@@ -18,6 +18,7 @@ public class AuthController : ControllerBase
     return await _userService.Register(registerRequest.Email, registerRequest.Password, registerRequest.Name);
   }
   
+  
   [HttpPost("login")]
   public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest loginRequest)
   {
@@ -25,15 +26,15 @@ public class AuthController : ControllerBase
   }
   
   [HttpPost("refresh")]
-  public async Task<ActionResult<LoginResponse>> Refresh([FromBody] RefreshRequest refreshRequest)
+  public async Task<ActionResult<LoginResponse>> Refresh([FromBody] RefreshRequest request)
   {
-    return await _userService.RefreshTokens(HttpContext.User, refreshRequest.RefreshToken);
+    return await _userService.RefreshTokens(request.AccessToken, request.RefreshToken);
   }
   
   [HttpGet("test")]
   public ActionResult TestEndpoint()
   {
-    var claims = HttpContext.User;
+    var claims = HttpContext;
     return Ok();
   }
 }
