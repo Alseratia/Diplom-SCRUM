@@ -1,8 +1,9 @@
 ﻿version: "3.9"
 services:
-  # Microservices
+  # Gateway
   api-gateway:
     image: api-gateway
+    restart: always
     build:
       dockerfile: ApiGateway/Dockerfile
     ports:
@@ -10,8 +11,11 @@ services:
     networks:
       - main-network
       
+  # Microservices
+  
   auth-microservice:
     image: auth-microservice
+    restart: always
     build:
       dockerfile: AuthMicroservice/Dockerfile
     ports:
@@ -69,15 +73,18 @@ services:
 #      - "5054:5432"
 #    networks:
 #      - main-network
-#  rabbit-mq:
-#    container_name: "rabbit-mq"
-#    image: rabbitmq:3.13-alpine
-#    env_file:
-#      - rabbit-mq.env
-#    ports:
-#      - "5055:5672"
-#    networks:
-#      - main-network
+  
+  rabbit-mq:
+    container_name: "rabbit-mq"
+    image: rabbitmq:3.13-management-alpine
+    env_file:
+      - rabbit-mq.env
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - main-network
+      
 networks:
   main-network:
     driver: bridge
