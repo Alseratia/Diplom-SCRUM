@@ -32,7 +32,17 @@ services:
     env_file:
       - auth-db.env
     ports:
-      - "5050:5432"
+      - "5432:5432"
+    networks:
+      - main-network
+      
+  notifications-db:
+    container_name: "notifications-db"
+    image: postgres:16-alpine
+    env_file:
+      - notifications-db.env
+    ports:
+      - "5432:5432"
     networks:
       - main-network
         

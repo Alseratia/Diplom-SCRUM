@@ -10,7 +10,7 @@ namespace AuthMicroservice.Utils;
 public static class JwtTokenService
 {
   public const string SecretKey = "12DD91672632AF1E01A5896DA559E8F7";
-  public const int ExpiresInMin = 30;
+  public const int ExpiresInMin = 10000;
 
 
   public static Tokens GenerateJwtTokens(User user)

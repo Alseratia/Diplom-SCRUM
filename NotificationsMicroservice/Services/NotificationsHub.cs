@@ -12,6 +12,6 @@ public class NotificationsHub : Hub
   
   public void Send(string userId, string message)
   {
-    
+    Clients.User(userId).SendAsync("notification", message);
   }
 }
