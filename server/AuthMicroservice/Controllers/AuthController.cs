@@ -13,7 +13,7 @@ public class AuthController : ControllerBase
 
   
   [HttpPost("register")]
-  public async Task<ActionResult<RegisterResponse>> Register([FromBody] RegisterRequest registerRequest)
+  public async Task<ActionResult<LoginResponse>> Register([FromBody] RegisterRequest registerRequest)
   {
     return await _userService.Register(registerRequest.Email, registerRequest.Password, registerRequest.Name);
   }

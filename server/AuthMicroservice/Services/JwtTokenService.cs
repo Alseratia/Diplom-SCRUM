@@ -30,7 +30,6 @@ public static class JwtTokenService
     var tokenKey = Encoding.ASCII.GetBytes(SecretKey);
     var userClaims = new ClaimsIdentity(new List<Claim>()
     {
-      new Claim(JwtRegisteredClaimNames.Name, user.Name),
       new Claim("UserId", user.Id.ToString())
     });
 

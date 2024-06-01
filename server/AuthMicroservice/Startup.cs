@@ -34,6 +34,7 @@ public class Startup
     app.UseStaticFiles();
     
     app.UseSwagger();
+    app.UseSwaggerUI();
     
     app.UseRouting();
     

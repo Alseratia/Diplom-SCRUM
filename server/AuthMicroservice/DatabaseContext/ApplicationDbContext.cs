@@ -13,32 +13,49 @@ public class ApplicationDbContext : DbContext
     base(options)
   { }
   
-  public User CreateUser(string email, string password, string name)
+  public async Task<User> CreateUserAsync(string email, string password)
   {
     var salt = HashService.GenerateSalt();
-    var user = new Models.User()
+    var user = new User()
     {
       Id = Guid.NewGuid(),
       Email = email,
-      Name = name,
       Salt = salt,
       PasswordHash = HashService.GenerateHash(password, salt)
     };
-    
     Users.Add(user);
-    SaveChanges();
+    await SaveChangesAsync();
+    
+    await CreateTokens(user);
     return user;
   }
 
-  public async Task<User?> GetUserById(Guid id)
+  public async Task<User?> GetUserByIdAsync(Guid id)
   {
     return await Users.Include(x => x.Tokens)
       .FirstOrDefaultAsync(x => x.Id == id);
   }
 
-  public async Task<User?> GetByEmail(string email)
+  public async Task<User?> GetByEmailAsync(string email)
   {
     return await Users.Include(x => x.Tokens)
       .FirstOrDefaultAsync(x => x.Email == email);
+  }
+
+  public async Task CreateTokens(User user)
+  {
+    if (user.Tokens != null)
+    {
+      Tokens.Remove(user.Tokens);
+      user.Tokens = null;
+    }
+    
+    var tokens = JwtTokenService.GenerateJwtTokens(user);
+    Tokens.Add(tokens);
+    
+    tokens.User = user;
+    user.Tokens = tokens;
+    
+    await SaveChangesAsync();
   }
 }

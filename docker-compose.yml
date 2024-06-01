@@ -5,7 +5,7 @@ services:
     image: api-gateway
     restart: always
     build:
-      dockerfile: ApiGateway/Dockerfile
+      dockerfile: server/ApiGateway/Dockerfile
     ports:
       - "7003:80"
     networks:
@@ -17,7 +17,9 @@ services:
     image: auth-microservice
     restart: always
     build:
-      dockerfile: AuthMicroservice/Dockerfile
+      dockerfile: server/AuthMicroservice/Dockerfile
+    env_file:
+      - auth-db.env
     ports:
       - "5010:80"
     networks:
@@ -31,9 +33,22 @@ services:
     image: postgres:16-alpine
     env_file:
       - auth-db.env
+    ports:
+      - "5050:5432"
     networks:
       - main-network
-      
+    
+  rabbit-mq:
+    container_name: "rabbit-mq"
+    image: rabbitmq:3.13-management-alpine
+    env_file:
+      - rabbit-mq.env
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - main-network 
+        
 #  notifications-db:
 #    container_name: "notifications-db"
 #    image: postgres:16-alpine
@@ -70,24 +85,13 @@ services:
 #      - "5053:5432"
 #    networks:
 #      - main-network
-#  projects-db:
-#    container_name: "projects-db"
-#    image: postgres:16-alpine
-#    env_file:
-#      - projects-db.env
-#    ports:
-#      - "5054:5432"
-#    networks:
-#      - main-network
-  
-  rabbit-mq:
-    container_name: "rabbit-mq"
-    image: rabbitmq:3.13-management-alpine
+  projects-db:
+    container_name: "projects-db"
+    image: postgres:16-alpine
     env_file:
-      - rabbit-mq.env
+      - projects-db.env
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "5054:5432"
     networks:
       - main-network
       
