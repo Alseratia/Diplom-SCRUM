@@ -8,13 +8,10 @@ namespace NotificationsMicroservice.Hubs;
 public class NotificationsHub : Hub
 {
   private readonly IDbContextFactory<ApplicationDbContext> _dbFactory;
-  
   public NotificationsHub(IDbContextFactory<ApplicationDbContext> dbFactory)
   {
     _dbFactory = dbFactory;
   }
-
- 
   public async Task JoinNotificationsChannel(string userId)
   {
     await Groups.AddToGroupAsync(Context.ConnectionId, userId);
@@ -27,7 +24,7 @@ public class NotificationsHub : Hub
   
   public async Task SendNotification(string userId, Notification notification)
   {
-    await Clients.Group(userId).SendAsync("Notification", notification);
+    await Clients.Group(userId).SendAsync("NewNotification", notification);
   }
   
   public async Task ReadNotifications(string userId)

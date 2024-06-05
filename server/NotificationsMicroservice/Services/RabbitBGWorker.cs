@@ -78,7 +78,7 @@ public class RabbitBGWorker : BackgroundService
       CreatedAt = DateTime.Now
     };
     
-    _notificationsHub.Clients.Group(notificationMessage.UserId).SendAsync("Notification", dbNotification);
+    _notificationsHub.Clients.Group(notificationMessage.UserId).SendAsync("NewNotification", dbNotification);
     
     using (var db = _dbFactory.CreateDbContext())
     {

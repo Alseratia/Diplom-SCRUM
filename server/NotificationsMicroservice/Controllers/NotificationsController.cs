@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NotificationsMicroservice.DatabaseContext;
 
@@ -13,8 +14,10 @@ public class NotificationsController : ControllerBase
   public NotificationsController(ApplicationDbContext db) => _db = db;
   
   [HttpGet("user/{userId}/notifications")]
-  public async Task<ActionResult> GetNotifications(Guid userId)
+  public async Task<ActionResult> GetNotifications([FromRoute] Guid userId, [FromHeader(Name = "UserId")] Guid userIdFromHeader)
   {
+    if (userId != userIdFromHeader) return new ForbidResult();
+    
     var notifications = await _db.Notifications.Where(x => x.UserId == userId).ToListAsync();
 
     return new OkObjectResult(notifications);
