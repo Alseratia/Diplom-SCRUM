@@ -19,7 +19,6 @@ public class Startup
   
   public void ConfigureServices(IServiceCollection services)
   {
-    Console.WriteLine(Configuration);
     services.AddAuthentication(o =>
       {
         o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -37,7 +36,7 @@ public class Startup
           IssuerSigningKey = new SymmetricSecurityKey("12DD91672632AF1E01A5896DA559E8F7"u8.ToArray())
         };
       });
-    
+    services.AddSignalR();
     services.AddOcelot(Configuration);
 
     services.AddControllers();
@@ -59,6 +58,7 @@ public class Startup
     app.UseAuthentication();
     app.UseAuthorization();
     
+    app.UseWebSockets();
     app.UseOcelot().Wait();
     
     app.UseEndpoints(endpoints =>
