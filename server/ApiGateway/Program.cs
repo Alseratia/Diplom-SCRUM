@@ -16,9 +16,8 @@ public static class Program
     Host.CreateDefaultBuilder(args)
       .ConfigureAppConfiguration((_, config) =>
       {
-        config.AddJsonFile("ocelot.json")
-              .AddJsonFile("ocelot.auth-microservice.json")
-             // .AddJsonFile("ocelot.notifications-microservice.json")
+        config.AddJsonFile("ocelot.global.json")
+              .AddJsonFile("ocelot.routes.json")
               .AddJsonFile("ocelot.swagger-endpoints.json");
         Console.WriteLine();
       })

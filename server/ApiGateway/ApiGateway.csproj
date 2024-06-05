@@ -15,16 +15,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="ocelot.json">
+      <None Update="ocelot.global.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="ocelot.auth-microservice.json">
+      <None Update="ocelot.routes.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="ocelot.swagger-endpoints.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="ocelot.notifications-microservice.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

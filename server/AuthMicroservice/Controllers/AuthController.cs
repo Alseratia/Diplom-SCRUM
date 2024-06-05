@@ -30,6 +30,13 @@ public class AuthController : ControllerBase
   {
     return await _userService.RefreshTokens(request.AccessToken, request.RefreshToken);
   }
+
+  [HttpGet("test2")]
+  public async Task<ActionResult> Test2Endpoint()
+  {
+    await Task.Run(() => Console.WriteLine(123));
+    return Ok();
+  }
   
   [HttpGet("test")]
   public ActionResult TestEndpoint()

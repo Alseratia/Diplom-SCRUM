@@ -13,7 +13,7 @@
       "UpstreamPathTemplate": "/api/v1/auth/register",
       "UpstreamHttpMethod": [ "POST" ]
     },
-    
+
     {
       "SwaggerKey": "AuthMicroservice",
       "DownstreamPathTemplate": "/api/v1/auth/login",
@@ -27,7 +27,7 @@
       "UpstreamPathTemplate": "/api/v1/auth/login",
       "UpstreamHttpMethod": [ "POST" ]
     },
-    
+
     {
       "SwaggerKey": "AuthMicroservice",
       "DownstreamPathTemplate": "/api/v1/auth/refresh",
@@ -54,7 +54,32 @@
       ],
       "UpstreamPathTemplate": "/api/v1/auth/test",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "SwaggerKey": "NotificationsMicroservice",
+      "DownstreamPathTemplate": "/api/v1/user/{userId}/notifications",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "notifications-microservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/user/{userId}/notifications",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "SwaggerKey": "NotificationsMicroservice",
+      "DownstreamPathTemplate": "/api/v1/notifications-hub",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "notifications-microservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/notifications-hub",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
     }
-    
   ]
 }

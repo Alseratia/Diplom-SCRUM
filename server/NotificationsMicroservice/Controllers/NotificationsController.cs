@@ -12,11 +12,10 @@ public class NotificationsController : ControllerBase
   
   public NotificationsController(ApplicationDbContext db) => _db = db;
   
-  [HttpGet("/user/{userId}/notifications")]
-  public async Task<ActionResult> GetNotifications(string userId)
+  [HttpGet("user/{userId}/notifications")]
+  public async Task<ActionResult> GetNotifications(Guid userId)
   {
-    var userIdGuid = Guid.Parse(userId);
-    var notifications = await _db.Notifications.Where(x => x.UserId == userIdGuid).ToListAsync();
+    var notifications = await _db.Notifications.Where(x => x.UserId == userId).ToListAsync();
 
     return new OkObjectResult(notifications);
   }
