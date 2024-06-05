@@ -1,9 +1,10 @@
 ﻿using System.Text;
 using System.Text.Json;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using NotificationsMicroservice.DatabaseContext;
 using NotificationsMicroservice.DatabaseContext.Models;
+using NotificationsMicroservice.Hubs;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Shared;
@@ -13,22 +14,25 @@ namespace NotificationsMicroservice.Services;
 public class RabbitBGWorker : BackgroundService
 {
   private readonly IDbContextFactory<ApplicationDbContext> _dbFactory;
-  private readonly IConnection _connection;
   private readonly IModel _channel;
-
-  public RabbitBGWorker(IDbContextFactory<ApplicationDbContext> dbFactory)
+  private readonly ILogger<RabbitBGWorker> _logger;
+  private readonly IHubContext<NotificationsHub> _notificationsHub;
+  public RabbitBGWorker(IDbContextFactory<ApplicationDbContext> dbFactory, 
+    ILogger<RabbitBGWorker> logger, 
+    IHubContext<NotificationsHub> notificationsHub)
   {
     _dbFactory = dbFactory;
+    _logger = logger;
+    _notificationsHub = notificationsHub;
     var factory = new ConnectionFactory() 
     { 
-      HostName = "localhost", 
+      HostName = "rabbit-mq", 
       Port = 5672, 
       UserName = "rabbit_user", 
       Password = "rabbit_pass"
     };
     
-    _connection = factory.CreateConnection();
-    _channel = _connection.CreateModel();
+    _channel = factory.CreateConnection().CreateModel();
     _channel.QueueDeclare(queue: "Notifications",
       durable: false,
       exclusive: false,
@@ -54,23 +58,27 @@ public class RabbitBGWorker : BackgroundService
   private void Consume(object? sen, BasicDeliverEventArgs eventArgs)
   {
     var message = Encoding.UTF8.GetString(eventArgs.Body.ToArray());
-    var notificationMessage = JsonSerializer.Deserialize<NotificationModel>(message);
-    if (notificationMessage == null)
+    NotificationModel notificationMessage = null!;
+    try
     {
-      // лог
-      return;
+      notificationMessage = JsonSerializer.Deserialize<NotificationModel>(message)!;
+    }
+    catch (Exception e)
+    {
+      _logger.LogError("Ошибка десериализации уведомления из очереди");
     }
     
     var dbNotification = new Notification()
     {
       Id = Guid.NewGuid(),
       UserId = Guid.Parse(notificationMessage.UserId),
+      Title = notificationMessage.Title,
       Message = notificationMessage.Message,
       IsRead = false,
       CreatedAt = DateTime.Now
     };
-
-    // TODO Отправить уведомление на сокет
+    
+    _notificationsHub.Clients.Group(notificationMessage.UserId).SendAsync("Notification", dbNotification);
     
     using (var db = _dbFactory.CreateDbContext())
     {

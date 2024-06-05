@@ -7,7 +7,8 @@ public static class ServiceCollectionExtensions
 
   public static IServiceCollection AddNotificationsMicroserviceDatabaseContext(this IServiceCollection services, string connectionString)
   {
-    services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+    //services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
     services.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
     return services;
   }

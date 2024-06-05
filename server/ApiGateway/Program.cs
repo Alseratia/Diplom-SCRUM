@@ -18,7 +18,9 @@ public static class Program
       {
         config.AddJsonFile("ocelot.json")
               .AddJsonFile("ocelot.auth-microservice.json")
+             // .AddJsonFile("ocelot.notifications-microservice.json")
               .AddJsonFile("ocelot.swagger-endpoints.json");
+        Console.WriteLine();
       })
       .ConfigureWebHostDefaults(webBuilder =>
       {

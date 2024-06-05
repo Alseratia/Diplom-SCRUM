@@ -12,6 +12,17 @@
       ]
     },
     {
+      "Key": "NotificationsMicroservice",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "NotificationsMicroservice API",
+          "Version": "v1",
+          "Url": "http://notifications-microservice:80/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
       "Key": "Gateway",
       "TransformByOcelotConfig": false,
       "Config": [

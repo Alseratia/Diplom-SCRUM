@@ -2,10 +2,9 @@
 services:
   # Gateway
   api-gateway:
-    image: api-gateway
     restart: always
     build:
-      dockerfile: server/ApiGateway/Dockerfile
+      dockerfile: ApiGateway/Dockerfile
     ports:
       - "7003:80"
     networks:
@@ -14,10 +13,9 @@ services:
   # Microservices
   
   auth-microservice:
-    image: auth-microservice
     restart: always
     build:
-      dockerfile: server/AuthMicroservice/Dockerfile
+      dockerfile: AuthMicroservice/Dockerfile
     env_file:
       - auth-db.env
     ports:
@@ -27,6 +25,19 @@ services:
     depends_on: 
       - auth-db
       
+  notifications-microservice:
+    restart: always
+    build:
+      dockerfile: NotificationsMicroservice/Dockerfile
+    env_file:
+      - notifications-db.env
+    ports:
+      - "5030:80"
+    networks:
+      - main-network
+    depends_on:
+      - notifications-db
+      
   # Databases
   auth-db:
     container_name: "auth-db"
@@ -35,6 +46,16 @@ services:
       - auth-db.env
     ports:
       - "5050:5432"
+    networks:
+      - main-network
+        
+  notifications-db:
+    container_name: "notifications-db"
+    image: postgres:16-alpine
+    env_file:
+      - notifications-db.env
+    ports:
+      - "5053:5432"
     networks:
       - main-network
     
@@ -48,15 +69,6 @@ services:
       - "15672:15672"
     networks:
       - main-network 
-        
-#  notifications-db:
-#    container_name: "notifications-db"
-#    image: postgres:16-alpine
-#    env_file:
-#      - notifications-db.env
-#    networks:
-#      - main-network
-        
 #  chats-db:
 #    container_name: "chats-db"
 #    image: postgres:16-alpine
@@ -76,24 +88,17 @@ services:
 #      - "5052:6379"
 #    networks:
 #      - main-network
-#  notifications-db:
-#    container_name: "notifications-db"
+      
+      
+#  projects-db:
+#    container_name: "projects-db"
 #    image: postgres:16-alpine
 #    env_file:
-#      - notifications-db.env
+#      - projects-db.env
 #    ports:
-#      - "5053:5432"
+#      - "5054:5432"
 #    networks:
 #      - main-network
-  projects-db:
-    container_name: "projects-db"
-    image: postgres:16-alpine
-    env_file:
-      - projects-db.env
-    ports:
-      - "5054:5432"
-    networks:
-      - main-network
       
 networks:
   main-network:

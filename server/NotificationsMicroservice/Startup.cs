@@ -1,4 +1,5 @@
 ﻿using NotificationsMicroservice.DatabaseContext;
+using NotificationsMicroservice.Hubs;
 using NotificationsMicroservice.Services;
 
 namespace NotificationsMicroservice;
@@ -11,12 +12,16 @@ public class Startup
   
   public void ConfigureServices(IServiceCollection services)
   {
+    services.AddControllers();
     services.AddSignalR();
     services.AddHostedService<RabbitBGWorker>();
+    
     services.AddNotificationsMicroserviceDatabaseContext(Configuration["NOTIFICATIONS_DB_CONNECTION_STRING"]!);
-
+    services.AddDatabaseMigration();
+    
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
+    
   }
 
   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -28,7 +33,8 @@ public class Startup
     
     app.UseEndpoints(endpoints =>
     {
-      endpoints.MapHub<NotificationsHub>("/api/v1/notifications");
+      endpoints.MapHub<NotificationsHub>("/api/v1/notifications-hub");
+      endpoints.MapControllers();
     });
     
   }

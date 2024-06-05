@@ -19,7 +19,7 @@ public class Startup
   
   public void ConfigureServices(IServiceCollection services)
   {
-    
+    Console.WriteLine(Configuration);
     services.AddAuthentication(o =>
       {
         o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
