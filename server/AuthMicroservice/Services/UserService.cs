@@ -13,7 +13,7 @@ public class UserService
   public UserService(ApplicationDbContext db) => (_db) = (db);
 
 
-  public async Task<ActionResult<LoginResponse>> Register(string email, string name, string password)
+  public async Task<ActionResult<LoginResponse>> Register(string email, string password)
   {
     if (await _db.GetByEmailAsync(email) != null) return new ConflictResult();
 
@@ -34,7 +34,7 @@ public class UserService
     return new LoginResponse(user);
   }
   
-  public async Task<ActionResult<LoginResponse>> RefreshTokens(string accessToken, string refreshToken)
+  public async Task<ActionResult<RefreshResponse>> RefreshTokens(string accessToken, string refreshToken)
   {
     var tokens = await _db.Tokens.Include(x => x.User)
       .SingleOrDefaultAsync(x => x.AccessToken == accessToken && x.RefreshToken == refreshToken);
@@ -43,6 +43,6 @@ public class UserService
     var user = tokens.User;
     await _db.CreateTokens(user);
 
-    return new LoginResponse(user);
+    return new RefreshResponse(user);
   }
 }

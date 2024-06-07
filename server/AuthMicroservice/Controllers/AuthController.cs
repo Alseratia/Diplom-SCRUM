@@ -13,9 +13,9 @@ public class AuthController : ControllerBase
 
   
   [HttpPost("register")]
-  public async Task<ActionResult<LoginResponse>> Register([FromBody] RegisterRequest registerRequest)
+  public async Task<ActionResult<LoginResponse>> Register([FromBody] LoginRequest registerRequest)
   {
-    return await _userService.Register(registerRequest.Email, registerRequest.Password, registerRequest.Name);
+    return await _userService.Register(registerRequest.Email, registerRequest.Password);
   }
   
   
@@ -26,7 +26,7 @@ public class AuthController : ControllerBase
   }
   
   [HttpPost("refresh")]
-  public async Task<ActionResult<LoginResponse>> Refresh([FromBody] RefreshRequest request)
+  public async Task<ActionResult<RefreshResponse>> Refresh([FromBody] RefreshRequest request)
   {
     return await _userService.RefreshTokens(request.AccessToken, request.RefreshToken);
   }

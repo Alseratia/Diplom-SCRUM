@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace NotificationsMicroservice.DatabaseContext.Models;
@@ -6,12 +7,14 @@ namespace NotificationsMicroservice.DatabaseContext.Models;
 [Index(nameof(UserId))]
 public class Notification
 {
-  [Key] 
+  [Key]
+  [JsonIgnore]
   public Guid Id { get; set; }
   public string Title { get; set; } = null!;
   public string Message { get; set; } = null!;
   public DateTime CreatedAt { get; set; }
-  public bool IsRead { get; set; } = false;
   public DateTime? ReadAt { get; set; }
+  
+  [JsonIgnore]
   public Guid UserId { get; set; }
 }

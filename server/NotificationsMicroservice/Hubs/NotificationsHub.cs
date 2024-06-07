@@ -16,27 +16,34 @@ public class NotificationsHub : Hub
   {
     await Groups.AddToGroupAsync(Context.ConnectionId, userId);
   }
-  
-  public async Task LeaveNotificationsChannel(string groupName)
-  {
-    await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
-  }
-  
-  public async Task SendNotification(string userId, Notification notification)
-  {
-    await Clients.Group(userId).SendAsync("NewNotification", notification);
-  }
-  
   public async Task ReadNotifications(string userId)
   {
-    using (var db = await _dbFactory.CreateDbContextAsync())
-    {
-      var userIdGuid = Guid.Parse(userId);
-      await db.Notifications
-        .Where(x => x.UserId == userIdGuid)
-        .ExecuteUpdateAsync(x => 
-          x.SetProperty(property => property.IsRead,  value => true)
-        );
-    }
+    await using var db = await _dbFactory.CreateDbContextAsync();
+    var userIdGuid = Guid.Parse(userId);
+    await db.Notifications
+      .Where(x => x.UserId == userIdGuid && x.ReadAt == null)
+      .ExecuteUpdateAsync(x => 
+        x.SetProperty(property => property.ReadAt,  value => DateTime.Now)
+      );
   }
+  
+  
+  // тестовые
+  public async Task SendNotificationToChannel(string userId)
+  {
+    var note = new Notification()
+    {
+      CreatedAt = DateTime.Now,
+      Id = Guid.NewGuid(),
+      Message = "Новое уведомление",
+      Title = "Новое уведомление"
+    };
+    await Clients.Group(userId).SendAsync("NewNotification", note);
+  }
+  
+  public async Task TestNotification(string userId)
+  {
+    await Clients.Client(userId).SendAsync("Test", "Тест");
+  }
+  
 }

@@ -74,7 +74,6 @@ public class RabbitBGWorker : BackgroundService
       UserId = Guid.Parse(notificationMessage.UserId),
       Title = notificationMessage.Title,
       Message = notificationMessage.Message,
-      IsRead = false,
       CreatedAt = DateTime.Now
     };
     
