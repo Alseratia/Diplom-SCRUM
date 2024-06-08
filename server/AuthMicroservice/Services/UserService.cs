@@ -11,8 +11,7 @@ public class UserService
 {
   private readonly ApplicationDbContext _db;
   public UserService(ApplicationDbContext db) => (_db) = (db);
-
-
+  
   public async Task<ActionResult<LoginResponse>> Register(string email, string password)
   {
     if (await _db.GetByEmailAsync(email) != null) return new ConflictResult();

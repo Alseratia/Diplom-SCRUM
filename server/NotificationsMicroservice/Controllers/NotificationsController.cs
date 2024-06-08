@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NotificationsMicroservice.DatabaseContext;
+using NotificationsMicroservice.DatabaseContext.Models;
 
 namespace NotificationsMicroservice.Controllers;
 
@@ -13,7 +14,8 @@ public class NotificationsController : ControllerBase
   public NotificationsController(ApplicationDbContext db) => _db = db;
   
   [HttpGet("user/{userId}/notifications")]
-  public async Task<ActionResult> GetNotifications([FromRoute] Guid userId, [FromHeader(Name = "UserId")] Guid userIdFromHeader)
+  public async Task<ActionResult<ICollection<Notification>>> GetNotifications(Guid userId, 
+    [FromHeader(Name = "UserId")] Guid userIdFromHeader)
   {
     if (userId != userIdFromHeader) return new ForbidResult();
     
@@ -23,14 +25,20 @@ public class NotificationsController : ControllerBase
   }
 
   [HttpDelete("/users/{userId}/notifications")]
-  public ActionResult DeleteNotifications()
+  public async Task<ActionResult> DeleteNotifications(Guid userId, 
+    [FromHeader(Name = "UserId")] Guid userIdFromHeader)
   {
+    if (userId != userIdFromHeader) return new ForbidResult();
+    await _db.Notifications.Where(x => x.UserId == userId).ExecuteDeleteAsync();
     return Ok();
   }
   
   [HttpDelete("/users/{userId}/notifications/{notificationId}")]
-  public ActionResult DeleteNotification()
+  public async Task<ActionResult> DeleteNotification(Guid userId, Guid notificationId, 
+    [FromHeader(Name = "UserId")] Guid userIdFromHeader)
   {
+    if (userId != userIdFromHeader) return new ForbidResult();
+    await _db.Notifications.Where(x => x.Id == notificationId && x.UserId == userId).ExecuteDeleteAsync();
     return Ok();
   }
 }
