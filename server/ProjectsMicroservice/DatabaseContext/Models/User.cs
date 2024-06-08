@@ -3,19 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectsMicroservice.DatabaseContext.Models;
 
-public class Project
+public class User
 {
   [Key]
   public Guid Id { get; set; }
   public string Name { get; set; } = null!;
   public string? Avatar { get; set; }
-  public DateTime CreatedAt { get; set; }
-  public DateTime? ClosedAt { get; set; }
   
-  [InverseProperty(nameof(Project))]
+  [InverseProperty("User")]
+  public ICollection<Invite>? Invites { get; set; }
+  [InverseProperty("User")]
   public ICollection<Participant>? Participants { get; set; }
-  
-  [InverseProperty(nameof(Project))]
-  public ICollection<Event>? Events { get; set; }
-  
 }

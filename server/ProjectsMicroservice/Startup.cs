@@ -1,4 +1,6 @@
-﻿using ProjectsMicroservice.DatabaseContext;
+﻿using System.Text.Json.Serialization;
+using ProjectsMicroservice.DatabaseContext;
+using ProjectsMicroservice.Services;
 
 namespace ProjectsMicroservice;
 
@@ -12,7 +14,16 @@ public class Startup
   {
     services.AddProjectsMicroserviceDatabaseContext(Configuration["PROJECTS_DB_CONNECTION_STRING"]!);
     services.AddDatabaseMigration();
-    
+
+    services.AddScoped<ProjectsService>()
+      .AddScoped<TasksService>()
+      .AddScoped<UserStoriesService>()
+      .AddScoped<UserService>();
+
+    services.AddControllers().AddJsonOptions(x =>
+    {
+      x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
   }
@@ -23,8 +34,10 @@ public class Startup
     app.UseSwaggerUI();
     
     app.UseRouting();
-    
 
-    
+    app.UseEndpoints(x =>
+    {
+      x.MapControllers();
+    });
   }
 }

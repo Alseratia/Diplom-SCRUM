@@ -1,8 +1,8 @@
 ﻿namespace ProjectsMicroservice.DatabaseContext.Enums;
 
-public enum TaskStatus
+public enum StoryStatus
 {
-  Pending,
+  Waiting,
   InProgress,
-  Resolved
+  Finished
 }

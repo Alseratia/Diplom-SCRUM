@@ -5,7 +5,7 @@ using NotificationsMicroservice.DatabaseContext;
 namespace NotificationsMicroservice.Controllers;
 
 [ApiController]
-[Route("/api/v1")]
+[Route("/api/v1/")]
 public class NotificationsController : ControllerBase
 {
   private readonly ApplicationDbContext _db;
@@ -21,5 +21,16 @@ public class NotificationsController : ControllerBase
 
     return new OkObjectResult(notifications);
   }
+
+  [HttpDelete("/users/{userId}/notifications")]
+  public ActionResult DeleteNotifications()
+  {
+    return Ok();
+  }
   
+  [HttpDelete("/users/{userId}/notifications/{notificationId}")]
+  public ActionResult DeleteNotification()
+  {
+    return Ok();
+  }
 }

@@ -3,13 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjectsMicroservice.DatabaseContext.Models;
 
-public class ProjectBacklog
+public class Event
 {
   [Key]
   public Guid Id { get; set; }
-  
-  [Required]
+  public string Name { get; set; } = null!;
+  public DateTime Start { get; set; }
+  public DateTime End { get; set; }
   public Guid ProjectId { get; set; }
-  [ForeignKey("ProjectId")]
+  
+  [ForeignKey(nameof(ProjectId))]
   public Project? Project { get; set; }
 }

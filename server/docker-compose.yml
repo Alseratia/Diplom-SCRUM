@@ -90,15 +90,15 @@ services:
 #      - main-network
       
       
-#  projects-db:
-#    container_name: "projects-db"
-#    image: postgres:16-alpine
-#    env_file:
-#      - projects-db.env
-#    ports:
-#      - "5054:5432"
-#    networks:
-#      - main-network
+  projects-db:
+    container_name: "projects-db"
+    image: postgres:16-alpine
+    env_file:
+      - projects-db.env
+    ports:
+      - "5054:5432"
+    networks:
+      - main-network
       
 networks:
   main-network:
