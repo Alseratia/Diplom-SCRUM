@@ -38,6 +38,19 @@ services:
     depends_on:
       - notifications-db
       
+  projects-microservice:
+    restart: always
+    build:
+      dockerfile: ProjectsMicroservice/Dockerfile
+    env_file:
+      - projects-db.env
+    ports:
+      - "5020:80"
+    networks:
+      - main-network
+    depends_on:
+      - projects-db
+       
   # Databases
   auth-db:
     container_name: "auth-db"

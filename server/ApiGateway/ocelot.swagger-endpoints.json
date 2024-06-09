@@ -23,6 +23,17 @@
       ]
     },
     {
+      "Key": "ProjectsMicroservice",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "ProjectsMicroservice API",
+          "Version": "v1",
+          "Url": "http://projects-microservice:80/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
       "Key": "Gateway",
       "TransformByOcelotConfig": false,
       "Config": [

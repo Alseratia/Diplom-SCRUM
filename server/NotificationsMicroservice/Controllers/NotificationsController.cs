@@ -13,7 +13,7 @@ public class NotificationsController : ControllerBase
   
   public NotificationsController(ApplicationDbContext db) => _db = db;
   
-  [HttpGet("user/{userId}/notifications")]
+  [HttpGet("users/{userId}/notifications")]
   public async Task<ActionResult<ICollection<Notification>>> GetNotifications(Guid userId, 
     [FromHeader(Name = "UserId")] Guid userIdFromHeader)
   {
@@ -24,7 +24,7 @@ public class NotificationsController : ControllerBase
     return new OkObjectResult(notifications);
   }
 
-  [HttpDelete("/users/{userId}/notifications")]
+  [HttpDelete("users/{userId}/notifications")]
   public async Task<ActionResult> DeleteNotifications(Guid userId, 
     [FromHeader(Name = "UserId")] Guid userIdFromHeader)
   {
@@ -33,7 +33,7 @@ public class NotificationsController : ControllerBase
     return Ok();
   }
   
-  [HttpDelete("/users/{userId}/notifications/{notificationId}")]
+  [HttpDelete("users/{userId}/notifications/{notificationId}")]
   public async Task<ActionResult> DeleteNotification(Guid userId, Guid notificationId, 
     [FromHeader(Name = "UserId")] Guid userIdFromHeader)
   {

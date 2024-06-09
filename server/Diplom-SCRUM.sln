@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectsMicroservice", "ProjectsMicroservice\ProjectsMicroservice.csproj", "{023928EE-3E82-4352-9AA4-350FEFE596B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F679C620-4477-438C-9887-8153598D2624}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{023928EE-3E82-4352-9AA4-350FEFE596B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{023928EE-3E82-4352-9AA4-350FEFE596B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{023928EE-3E82-4352-9AA4-350FEFE596B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F679C620-4477-438C-9887-8153598D2624}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F679C620-4477-438C-9887-8153598D2624}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F679C620-4477-438C-9887-8153598D2624}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F679C620-4477-438C-9887-8153598D2624}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

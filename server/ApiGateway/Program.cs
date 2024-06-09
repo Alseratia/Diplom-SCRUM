@@ -16,10 +16,9 @@ public static class Program
     Host.CreateDefaultBuilder(args)
       .ConfigureAppConfiguration((_, config) =>
       {
-        config.AddJsonFile("ocelot.global.json")
-              .AddJsonFile("ocelot.routes.json")
-              .AddJsonFile("ocelot.swagger-endpoints.json");
-        Console.WriteLine();
+        config.AddJsonFile("ocelot.global.json",true,true)
+              .AddJsonFile("ocelot.routes.json",true,true)
+              .AddJsonFile("ocelot.swagger-endpoints.json",true,true);
       })
       .ConfigureWebHostDefaults(webBuilder =>
       {
