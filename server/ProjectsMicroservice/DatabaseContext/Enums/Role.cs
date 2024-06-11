@@ -3,6 +3,6 @@
 public enum Role
 {
   Owner,
-  ScrumMuster,
+  ScrumMaster,
   Executor
 }

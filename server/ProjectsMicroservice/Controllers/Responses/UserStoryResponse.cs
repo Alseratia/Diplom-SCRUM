@@ -18,5 +18,5 @@ public class UserStoryResponse
   public DateTime? End { get; set; }
   public Guid? UserId { get; set; }
 
-  public ICollection<StoryTaskResponse>? Tasks { get; set; } = null!;
+  public ICollection<StoryTaskResponse> Tasks { get; set; } = null!;
 }

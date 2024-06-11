@@ -23,7 +23,7 @@ public class ProjectsService
       Name = request.Name,
       Avatar = request.Avatar,
       CreatedAt = DateTime.Now,
-      Participants = new List<Participant>()
+      Members = new List<Member>()
       {
         new()
         {
@@ -38,15 +38,16 @@ public class ProjectsService
     return new OkResult();
   }
 
-  public ActionResult<ICollection<UserProjectResponse>> GetUserProjects(Guid userId)
+  public ActionResult<ICollection<UserProjectResponse>> GetAllUserProjects(Guid userId)
   {
-    var projects = _db.Participants.AsNoTracking()
+    var projects = _db.Members.AsNoTracking()
       .Include(x => x.Project)
       .Where(x => x.UserId == userId);
     
     var response = projects.Select(x => new UserProjectResponse()
     {
-      Name = x.Project!.Name,
+      Id = x.Project!.Id,
+      Name = x.Project.Name,
       Avatar = x.Project.Avatar,
       Role = x.Role,
       CreatedAt = x.Project.CreatedAt,
@@ -55,16 +56,8 @@ public class ProjectsService
     return new OkObjectResult(response);
   }
 
-  public async Task<ActionResult> DeleteProject(Guid userId, Guid projectId)
+  public async Task<ActionResult> DeleteProject(Guid userId, string projectName)
   {
-    var project = await _db.Projects.FindAsync(projectId);
-    if (project == null) return new NotFoundResult();
-
-    var participant = _db.Participants.FirstOrDefault(x => x.UserId == userId);
-    if (participant?.Role != Role.Owner) return new ForbidResult();
-    
-    project.ClosedAt = DateTime.Now;
-    await _db.SaveChangesAsync();
     return new OkResult();
   }
 }

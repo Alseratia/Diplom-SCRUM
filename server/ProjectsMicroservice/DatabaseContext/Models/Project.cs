@@ -13,7 +13,7 @@ public class Project
   public DateTime? ClosedAt { get; set; }
   
   [InverseProperty(nameof(Project))]
-  public ICollection<Participant>? Participants { get; set; }
+  public ICollection<Member>? Members { get; set; }
   
   [InverseProperty(nameof(Project))]
   public ICollection<Event>? Events { get; set; }

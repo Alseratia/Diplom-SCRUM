@@ -14,10 +14,11 @@ public class UserStoriesService
   public UserStoriesService(ApplicationDbContext db)
     => _db = db;
 
-  public ActionResult<ICollection<UserStoryResponse>> GetProjectUserStories(Guid projectId)
+  public ActionResult<ICollection<UserStoryResponse>> GetProjectUserStories(string projectName)
   {
     var dbStories = _db.UserStories.AsNoTracking()
-      .Where(x => x.ProjectId == projectId)
+        .Include(x => x.Project)
+      .Where(x => x.Project!.Name == projectName)
       .Include(x => x.Tasks);
     
     var stories = dbStories.Select(x => MapStoryResponse(x));
@@ -44,9 +45,12 @@ public class UserStoriesService
     return new OkObjectResult(stories);
   }
   
-  public async Task<ActionResult> CreateUserStory(Guid projectId, CreateUserStoryRequest request)
+  public async Task<ActionResult> CreateUserStory(Guid userId, string projectName, CreateUserStoryRequest request)
   {
-    var project = _db.Projects.AsNoTracking().FirstOrDefault(x => x.Id == projectId);
+    var project = _db.Members
+      .Where(x => x.UserId == userId)
+      .Select(x => x.Project)
+      .FirstOrDefault(x => x.Name == projectName);
     if (project == null) return new NotFoundResult();
 
     var newStory = new UserStory()
@@ -62,7 +66,7 @@ public class UserStoriesService
     return new OkResult();
   }
 
-  public async Task<ActionResult> DeleteUserStory(Guid storyId)
+  public async Task<ActionResult> DeleteUserStory(string projectName, Guid storyId)
   {
     var result = await _db.UserStories
       .Where(x => x.Id == storyId)

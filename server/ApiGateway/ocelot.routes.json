@@ -82,26 +82,6 @@
     },
     {
       "SwaggerKey": "ProjectsMicroservice",
-      "DownstreamPathTemplate": "/api/v1/users/{some}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "projects-microservice",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/v1/users/{some}",
-      "UpstreamHttpMethod": [ "POST","DELETE","GET" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
-      "AddHeadersToRequest": {
-        "UserId": "Claims[UserId] > value"
-      }
-    },
-    {
-      "SwaggerKey": "ProjectsMicroservice",
       "DownstreamPathTemplate": "/api/v1/projects",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -139,86 +119,8 @@
       "AddHeadersToRequest": {
         "UserId": "Claims[UserId] > value"
       }
-    },
-    {
-      "SwaggerKey": "ProjectsMicroservice",
-      "DownstreamPathTemplate": "/api/v1/user-stories/{some}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "projects-microservice",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/v1/user-stories/{some}",
-      "UpstreamHttpMethod": [ "POST", "DELETE", "GET" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
-      "AddHeadersToRequest": {
-        "UserId": "Claims[UserId] > value"
-      }
-    },
-    {
-      "SwaggerKey": "ProjectsMicroservice",
-      "DownstreamPathTemplate": "/api/v1/tasks/{some}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "projects-microservice",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/v1/tasks/{some}",
-      "UpstreamHttpMethod": [ "POST", "DELETE", "GET" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
-      "AddHeadersToRequest": {
-        "UserId": "Claims[UserId] > value"
-      }
-    },
-    {
-      "SwaggerKey": "ProjectsMicroservice",
-      "DownstreamPathTemplate": "/api/v1/sprints",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "projects-microservice",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/v1/sprints",
-      "UpstreamHttpMethod": [ "POST", "DELETE", "GET" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
-      "AddHeadersToRequest": {
-        "UserId": "Claims[UserId] > value"
-      }
-    },
-    {
-      "SwaggerKey": "ProjectsMicroservice",
-      "DownstreamPathTemplate": "/api/v1/sprints/{some}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "projects-microservice",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/v1/sprints/{some}",
-      "UpstreamHttpMethod": [ "POST", "DELETE", "GET" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
-      "AddHeadersToRequest": {
-        "UserId": "Claims[UserId] > value"
-      }
     }
+    
+    
   ]
 }

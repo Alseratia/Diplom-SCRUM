@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProjectsMicroservice.Controllers.Requests;
 using ProjectsMicroservice.Controllers.Responses;
 using ProjectsMicroservice.Services;
 
 namespace ProjectsMicroservice.Controllers;
 
-[Route("/api/v1/")]
+[Route("/api/v1/projects/{projectName}")]
 [ApiController]
 public class UserStoriesController : ControllerBase
 {
@@ -13,40 +14,47 @@ public class UserStoriesController : ControllerBase
   
   public UserStoriesController(UserStoriesService storiesService)
     => _storiesService = storiesService;
-  
-  [HttpGet("projects/{projectId}/user-stories")]
-  public ActionResult<ICollection<UserStoryResponse>> GetProjectUserStories(Guid projectId)
+
+  #region Из проекта
+
+  [HttpGet("user-stories")]
+  public ActionResult<ICollection<UserStoryResponse>> GetProjectUserStories([FromHeader] Guid userId, string projectName)
   {
-    return _storiesService.GetProjectUserStories(projectId);
+    return _storiesService.GetProjectUserStories(projectName);
+  }
+
+  [HttpPost("user-stories")]
+  public async Task<ActionResult> CreateUserStory([FromHeader] Guid userId, string projectName, [FromBody] CreateUserStoryRequest request)
+  {
+    return await _storiesService.CreateUserStory(userId, projectName, request);
   }
   
-  [HttpGet("sprints/{sprintsId}/user-stories")]
-  public ActionResult<ICollection<UserStoryResponse>> GetSprintUserStories(Guid sprintsId)
-  {
-    return _storiesService.GetSprintUserStories(sprintsId);
-  }
-  
-  [HttpGet("users/{userId}/user-stories")]
-  public ActionResult<ICollection<UserStoryResponse>> GetUserUserStories(Guid userId)
-  {
-    return _storiesService.GetUserUserStories(userId);
-  }
-  
-  [HttpPost("projects/{projectId}/user-stories")]
-  public async Task<ActionResult> CreateUserStory(Guid projectId, [FromBody] CreateUserStoryRequest request)
-  {
-    return await _storiesService.CreateUserStory(projectId, request);
-  }
-  
+  // TODO 
   [HttpPost("user-stories/{userStoryId}")]
-  public async Task<ActionResult> MoveUserStory(Guid userStoryId, [FromQuery] Guid sprintId)
+  public async Task<ActionResult> MoveUserStory(Guid userStoryId, [FromQuery] string sprintName)
   {
-    return await _storiesService.MoveStoryToSprint(userStoryId, sprintId);
+    return Ok();
+    //return await _storiesService.MoveStoryToSprint(userStoryId, sprintName);
   }
   
   [HttpDelete("user-stories/{userStoryId}")]
-  public async Task<ActionResult> DeleteUserStory(Guid userStoryId)
+  public async Task<ActionResult> DeleteUserStory(string projectName, Guid userStoryId)
   {
-    return await _storiesService.DeleteUserStory(userStoryId);
+    return await _storiesService.DeleteUserStory(projectName, userStoryId);
   }
+  
+  #endregion
+  
+  #region Из спринта
+
+  [HttpGet("sprints/{sprintName}/user-stories")]
+  public ActionResult<ICollection<UserStoryResponse>> GetSprintUserStories(string sprintName)
+  {
+    return Ok();
+    //return _storiesService.GetSprintUserStories(sprintName);
+  }
+
+  #endregion
+
+  
 }

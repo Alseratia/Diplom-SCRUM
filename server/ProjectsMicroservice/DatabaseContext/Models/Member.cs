@@ -7,7 +7,7 @@ namespace ProjectsMicroservice.DatabaseContext.Models;
 
 [Index(nameof(UserId))]
 [Index(nameof(ProjectId))]
-public class Participant
+public class Member
 {
   [Key]
   public Guid Id { get; set; }

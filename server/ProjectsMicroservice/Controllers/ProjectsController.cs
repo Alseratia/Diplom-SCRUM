@@ -5,7 +5,7 @@ using ProjectsMicroservice.Services;
 
 namespace ProjectsMicroservice.Controllers;
 
-[Route("api/v1/")]
+[Route("api/v1/projects")]
 [ApiController]
 public class ProjectsController : ControllerBase
 {
@@ -14,21 +14,22 @@ public class ProjectsController : ControllerBase
   public ProjectsController(ProjectsService projectService)
     => _projectsService = projectService;
   
-  [HttpGet("users/{userId}/projects")]
-  public ActionResult<ICollection<UserProjectResponse>> GetUserProjects(Guid userId)
+  [HttpGet]
+  public ActionResult<ICollection<UserProjectResponse>> GetAllUserProjects([FromHeader] Guid userId)
   {
-    return _projectsService.GetUserProjects(userId);
+    return _projectsService.GetAllUserProjects(userId);
   }
 
-  [HttpPost("users/{userId}/projects")]
-  public async Task<ActionResult> CreateProject(Guid userId, [FromBody] CreateProjectRequest request)
+  [HttpPost]
+  public async Task<ActionResult> CreateProject([FromHeader] Guid userId, [FromBody] CreateProjectRequest request)
   {
     return await _projectsService.CreateProject(userId, request);
   }
   
-  [HttpDelete("users/{userId}/projects/{projectId}")]
-  public async Task<ActionResult> DeleteProject(Guid userId, Guid projectId)
+  [HttpDelete("{projectName}")]
+  public async Task<ActionResult> DeleteProject([FromHeader] Guid userId, string projectName)
   {
-    return await _projectsService.DeleteProject(userId, projectId);
+    return await _projectsService.DeleteProject(userId, projectName);
   }
 }
+

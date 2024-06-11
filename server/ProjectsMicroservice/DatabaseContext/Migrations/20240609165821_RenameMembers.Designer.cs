@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProjectsMicroservice.DatabaseContext;
@@ -11,9 +12,11 @@ using ProjectsMicroservice.DatabaseContext;
 namespace ProjectsMicroservice.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240609165821_RenameMembers")]
+    partial class RenameMembers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,7 +78,7 @@ namespace ProjectsMicroservice.Migrations
                     b.ToTable("Invites");
                 });
 
-            modelBuilder.Entity("ProjectsMicroservice.DatabaseContext.Models.Member", b =>
+            modelBuilder.Entity("ProjectsMicroservice.DatabaseContext.Models.Participant", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -96,7 +99,7 @@ namespace ProjectsMicroservice.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Members");
+                    b.ToTable("Participants");
                 });
 
             modelBuilder.Entity("ProjectsMicroservice.DatabaseContext.Models.Project", b =>
@@ -132,7 +135,7 @@ namespace ProjectsMicroservice.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime?>("End")
+                    b.Property<DateTime>("End")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
@@ -142,7 +145,7 @@ namespace ProjectsMicroservice.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("Start")
+                    b.Property<DateTime>("Start")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
@@ -276,16 +279,16 @@ namespace ProjectsMicroservice.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ProjectsMicroservice.DatabaseContext.Models.Member", b =>
+            modelBuilder.Entity("ProjectsMicroservice.DatabaseContext.Models.Participant", b =>
                 {
                     b.HasOne("ProjectsMicroservice.DatabaseContext.Models.Project", "Project")
-                        .WithMany("Members")
+                        .WithMany("Participants")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ProjectsMicroservice.DatabaseContext.Models.User", "User")
-                        .WithMany("Members")
+                        .WithMany("Participants")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -297,13 +300,13 @@ namespace ProjectsMicroservice.Migrations
 
             modelBuilder.Entity("ProjectsMicroservice.DatabaseContext.Models.Sprint", b =>
                 {
-                    b.HasOne("ProjectsMicroservice.DatabaseContext.Models.Project", "Project")
+                    b.HasOne("ProjectsMicroservice.DatabaseContext.Models.Project", "ProjectBacklog")
                         .WithMany()
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Project");
+                    b.Navigation("ProjectBacklog");
                 });
 
             modelBuilder.Entity("ProjectsMicroservice.DatabaseContext.Models.StoryTask", b =>
@@ -342,14 +345,14 @@ namespace ProjectsMicroservice.Migrations
                 {
                     b.Navigation("Events");
 
-                    b.Navigation("Members");
+                    b.Navigation("Participants");
                 });
 
             modelBuilder.Entity("ProjectsMicroservice.DatabaseContext.Models.User", b =>
                 {
                     b.Navigation("Invites");
 
-                    b.Navigation("Members");
+                    b.Navigation("Participants");
                 });
 
             modelBuilder.Entity("ProjectsMicroservice.DatabaseContext.Models.UserStory", b =>

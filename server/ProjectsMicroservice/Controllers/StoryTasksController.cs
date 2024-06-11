@@ -4,7 +4,7 @@ using ProjectsMicroservice.Services;
 
 namespace ProjectsMicroservice.Controllers;
 
-[Route("/api/v1/")]
+[Route("/api/v1/projects/{projectName}/user-stories/{storyId}/tasks")]
 [ApiController]
 public class StoryTasksController : ControllerBase
 {
@@ -13,15 +13,17 @@ public class StoryTasksController : ControllerBase
   public StoryTasksController(TasksService taskService)
     => _taskService = taskService;
   
-  [HttpPost("user-stories/{userStoryId}/tasks")]
-  public async Task<ActionResult> CreateTask(Guid userStoryId, CreateStoryTaskRequest request)
+  [HttpPost]
+  public async Task<ActionResult> CreateTask(string projectName, Guid storyId, CreateStoryTaskRequest request)
   {
-    return await _taskService.CreateTask(userStoryId, request);
+    return Ok();
+    //return await _taskService.CreateTask(userStoryId, request);
   }
 
-  [HttpDelete("tasks/{taskId}")]
-  public async Task<ActionResult> DeleteTask(Guid taskId)
+  [HttpDelete("{taskId}")]
+  public async Task<ActionResult> DeleteTask(string projectName, Guid storyId, Guid taskId)
   {
-    return await _taskService.DeleteTask(taskId);
+    return Ok();
+    //return await _taskService.DeleteTask(taskId);
   }
 }

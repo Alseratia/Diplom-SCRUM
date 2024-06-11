@@ -13,5 +13,5 @@ public class User
   [InverseProperty("User")]
   public ICollection<Invite>? Invites { get; set; }
   [InverseProperty("User")]
-  public ICollection<Participant>? Participants { get; set; }
+  public ICollection<Member>? Members { get; set; }
 }

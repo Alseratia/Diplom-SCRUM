@@ -6,14 +6,14 @@ namespace ProjectsMicroservice.Controllers;
 // [ApiController]
 // public class ParticipantsController : ControllerBase
 // {
-//   [HttpGet("projects/{projectId}/participants")]
-//   public ActionResult GetProjectParticipants(Guid projectId)
+//   [HttpGet("projects/{projectId}/members")]
+//   public ActionResult GetProjectMembers(Guid projectId)
 //   {
 //     return Ok();
 //   }
 //   
-//   [HttpDelete("participants/{participantId}")]
-//   public ActionResult DeleteProjectParticipant(Guid participantId)
+//   [HttpDelete("members/{memberId}")]
+//   public ActionResult DeleteProjectMember(Guid participantId)
 //   {
 //     return Ok();
 //   }
