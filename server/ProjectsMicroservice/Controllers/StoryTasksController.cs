@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjectsMicroservice.Controllers.Requests;
+using ProjectsMicroservice.Controllers.Responses;
+using ProjectsMicroservice.DatabaseContext.Models;
 using ProjectsMicroservice.Services;
 
 namespace ProjectsMicroservice.Controllers;
@@ -14,16 +16,14 @@ public class StoryTasksController : ControllerBase
     => _taskService = taskService;
   
   [HttpPost]
-  public async Task<ActionResult> CreateTask(string projectName, Guid storyId, CreateStoryTaskRequest request)
+  public async Task<ActionResult<StoryTaskResponse>> CreateTask([FromHeader] Guid userId, string projectName, Guid storyId, CreateStoryTaskRequest request)
   {
-    return Ok();
-    //return await _taskService.CreateTask(userStoryId, request);
+    return await _taskService.CreateTask(userId, projectName, storyId, request);
   }
 
   [HttpDelete("{taskId}")]
-  public async Task<ActionResult> DeleteTask(string projectName, Guid storyId, Guid taskId)
+  public async Task<ActionResult> DeleteTask([FromHeader] Guid userId, string projectName, Guid storyId, Guid taskId)
   {
-    return Ok();
-    //return await _taskService.DeleteTask(taskId);
+    return await _taskService.DeleteTask(userId, projectName, storyId, taskId);
   }
 }

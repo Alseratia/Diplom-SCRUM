@@ -15,7 +15,7 @@ public class ProjectsService
   public ProjectsService(ApplicationDbContext db)
     => _db = db;
 
-  public async Task<ActionResult> CreateProject(Guid userId, CreateProjectRequest request)
+  public async Task<ActionResult<UserProjectResponse>> CreateProject(Guid userId, CreateProjectRequest request)
   {
     var newProject = new Project()
     {
@@ -35,7 +35,14 @@ public class ProjectsService
     };
     _db.Projects.Add(newProject);
     await _db.SaveChangesAsync();
-    return new OkResult();
+    return new OkObjectResult(new UserProjectResponse()
+    {
+      Id = newProject.Id,
+      Avatar = newProject.Avatar,
+      CreatedAt = newProject.CreatedAt,
+      Name = newProject.Name,
+      Role = Role.Owner
+    });
   }
 
   public ActionResult<ICollection<UserProjectResponse>> GetAllUserProjects(Guid userId)
@@ -58,6 +65,12 @@ public class ProjectsService
 
   public async Task<ActionResult> DeleteProject(Guid userId, string projectName)
   {
+    var result = await _db.Members
+      .Where(x => x.UserId == userId && x.Project.Name == projectName)
+      .Select(x => x.Project)
+      .ExecuteDeleteAsync();
+    
+    if (result == 0) return new NotFoundResult();
     return new OkResult();
   }
 }

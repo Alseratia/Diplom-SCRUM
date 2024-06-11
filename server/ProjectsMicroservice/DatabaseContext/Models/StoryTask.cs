@@ -11,7 +11,8 @@ public class StoryTask
   public string Text { get; set; } = null!;
   public bool IsDone { get; set; }
   public Guid UserStoryId { get; set; }
-  
+
+  [Required]
   [ForeignKey(nameof(UserStoryId))]
-  public UserStory? UserStory { get; set; }
+  public virtual UserStory UserStory { get; set; } = null!;
 }

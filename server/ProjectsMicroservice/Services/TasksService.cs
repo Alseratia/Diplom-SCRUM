@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectsMicroservice.Controllers.Requests;
+using ProjectsMicroservice.Controllers.Responses;
 using ProjectsMicroservice.DatabaseContext;
 using ProjectsMicroservice.DatabaseContext.Models;
 
@@ -13,7 +14,7 @@ public class TasksService
   public TasksService(ApplicationDbContext db)
     => _db = db;
 
-  public async Task<ActionResult> CreateTask(Guid userStoryId, CreateStoryTaskRequest request)
+  public async Task<ActionResult<StoryTaskResponse>> CreateTask(Guid userId, string projectName, Guid userStoryId, CreateStoryTaskRequest request)
   {
     var story = await _db.UserStories.FindAsync(userStoryId);
     if (story == null) return new NotFoundResult();
@@ -29,10 +30,16 @@ public class TasksService
     _db.Tasks.Add(task);
     await _db.SaveChangesAsync();
     
-    return new OkResult();
+    return new OkObjectResult(new StoryTaskResponse()
+    {
+      Id = task.Id,
+      Title = task.Title,
+      Text = task.Text,
+      IsDone = task.IsDone
+    });
   }
 
-  public async Task<ActionResult> DeleteTask(Guid taskId)
+  public async Task<ActionResult> DeleteTask(Guid userId, string projectName, Guid userStoryId, Guid taskId)
   {
    var result = await _db.Tasks.Where(x => x.Id == taskId).ExecuteDeleteAsync();
    if (result == 0) return new NotFoundResult(); 

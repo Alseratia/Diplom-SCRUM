@@ -11,11 +11,16 @@ public class Project
   public string? Avatar { get; set; }
   public DateTime CreatedAt { get; set; }
   public DateTime? ClosedAt { get; set; }
-  
+
+  [Required]
   [InverseProperty(nameof(Project))]
-  public ICollection<Member>? Members { get; set; }
+  public virtual ICollection<Member> Members { get; set; } = null!;
   
+  [Required]
+  [InverseProperty(nameof(Project))] 
+  public virtual ICollection<Event> Events { get; set; } = null!;
+
+  [Required]
   [InverseProperty(nameof(Project))]
-  public ICollection<Event>? Events { get; set; }
-  
+  public virtual ICollection<UserStory> UserStories { get; set; } = null!;
 }

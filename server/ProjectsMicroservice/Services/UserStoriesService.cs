@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjectsMicroservice.Controllers.Requests;
 using ProjectsMicroservice.Controllers.Responses;
 using ProjectsMicroservice.DatabaseContext;
+using ProjectsMicroservice.DatabaseContext.Enums;
 using ProjectsMicroservice.DatabaseContext.Models;
 
 namespace ProjectsMicroservice.Services;
@@ -45,12 +46,13 @@ public class UserStoriesService
     return new OkObjectResult(stories);
   }
   
-  public async Task<ActionResult> CreateUserStory(Guid userId, string projectName, CreateUserStoryRequest request)
+  public async Task<ActionResult<UserStoryResponse>> CreateUserStory(Guid userId, string projectName, CreateUserStoryRequest request)
   {
-    var project = _db.Members
-      .Where(x => x.UserId == userId)
-      .Select(x => x.Project)
+    var project = _db.Users.Where(x => x.Id == userId)
+      .Include(x => x.Members)
+      .SelectMany(x => x.Members!.Select(m => m.Project))
       .FirstOrDefault(x => x.Name == projectName);
+    
     if (project == null) return new NotFoundResult();
 
     var newStory = new UserStory()
@@ -58,12 +60,13 @@ public class UserStoriesService
       Id = Guid.NewGuid(),
       Text = request.Text,
       Title = request.Title,
-      ProjectId = project.Id
+      ProjectId = project.Id,
+      Tasks = new List<StoryTask>()
     };
     _db.UserStories.Add(newStory);
     await _db.SaveChangesAsync();
     
-    return new OkResult();
+    return new OkObjectResult(MapStoryResponse(newStory));
   }
 
   public async Task<ActionResult> DeleteUserStory(string projectName, Guid storyId)
@@ -102,7 +105,7 @@ public class UserStoriesService
       Start = story.Start,
       End = story.End,
       UserId = story.UserId,
-      Tasks = story.Tasks?.Select(t => new StoryTaskResponse()
+      Tasks = story.Tasks.Select(t => new StoryTaskResponse()
       {
         Id = t.Id,
         Title = t.Title,

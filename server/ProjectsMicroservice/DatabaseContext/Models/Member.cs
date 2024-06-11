@@ -14,10 +14,11 @@ public class Member
   public Role Role { get; set; }
   public Guid ProjectId { get; set; }
   public Guid UserId { get; set; }
-  
-  
-  [ForeignKey(nameof(ProjectId))]
-  public Project? Project { get; set; }
-  [ForeignKey(nameof(UserId))]
-  public User? User { get; set; }
+
+  [Required]
+  [ForeignKey(nameof(ProjectId))] 
+  public virtual Project Project { get; set; } = null!;
+  [Required]
+  [ForeignKey(nameof(UserId))] 
+  public virtual User User { get; set; } = null!;
 }

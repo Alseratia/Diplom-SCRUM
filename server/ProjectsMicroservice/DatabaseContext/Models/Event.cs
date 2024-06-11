@@ -11,7 +11,8 @@ public class Event
   public DateTime Start { get; set; }
   public DateTime End { get; set; }
   public Guid ProjectId { get; set; }
-  
+
+  [Required]
   [ForeignKey(nameof(ProjectId))]
-  public Project? Project { get; set; }
+  public virtual Project Project { get; set; } = null!;
 }

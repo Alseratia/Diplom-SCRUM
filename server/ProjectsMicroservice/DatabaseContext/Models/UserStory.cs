@@ -19,12 +19,16 @@ public class UserStory
   public Guid? SprintId { get; set; }
   public Guid? UserId { get; set; }
   
-  [ForeignKey(nameof(ProjectId))]
-  public Project? Project { get; set; }
+  [ForeignKey(nameof(ProjectId))] 
+  public virtual Project? Project { get; set; }
+  
   [ForeignKey(nameof(SprintId))]
-  public Sprint? Sprint { get; set; }
+  public virtual Sprint? Sprint { get; set; }
+  
   [ForeignKey(nameof(UserId))]
-  public User? User { get; set; }
+  public virtual User? User { get; set; }
+
+  [Required]
   [InverseProperty("UserStory")]
-  public ICollection<StoryTask>? Tasks { get; set; }
+  public virtual ICollection<StoryTask> Tasks { get; set; } = null!;
 }

@@ -24,7 +24,7 @@ public class UserStoriesController : ControllerBase
   }
 
   [HttpPost("user-stories")]
-  public async Task<ActionResult> CreateUserStory([FromHeader] Guid userId, string projectName, [FromBody] CreateUserStoryRequest request)
+  public async Task<ActionResult<UserStoryResponse>> CreateUserStory([FromHeader] Guid userId, string projectName, [FromBody] CreateUserStoryRequest request)
   {
     return await _storiesService.CreateUserStory(userId, projectName, request);
   }

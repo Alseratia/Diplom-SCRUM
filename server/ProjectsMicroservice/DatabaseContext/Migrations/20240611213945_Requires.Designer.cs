@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProjectsMicroservice.DatabaseContext;
@@ -11,9 +12,11 @@ using ProjectsMicroservice.DatabaseContext;
 namespace ProjectsMicroservice.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240611213945_Requires")]
+    partial class Requires
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -213,9 +216,11 @@ namespace ProjectsMicroservice.Migrations
                         .HasColumnType("integer");
 
                     b.Property<Guid?>("ProjectId")
+                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("SprintId")
+                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.Property<DateTime?>("Start")
@@ -233,6 +238,7 @@ namespace ProjectsMicroservice.Migrations
                         .HasColumnType("text");
 
                     b.Property<Guid?>("UserId")
+                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -321,15 +327,21 @@ namespace ProjectsMicroservice.Migrations
                 {
                     b.HasOne("ProjectsMicroservice.DatabaseContext.Models.Project", "Project")
                         .WithMany("UserStories")
-                        .HasForeignKey("ProjectId");
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjectsMicroservice.DatabaseContext.Models.Sprint", "Sprint")
                         .WithMany()
-                        .HasForeignKey("SprintId");
+                        .HasForeignKey("SprintId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjectsMicroservice.DatabaseContext.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Project");
 

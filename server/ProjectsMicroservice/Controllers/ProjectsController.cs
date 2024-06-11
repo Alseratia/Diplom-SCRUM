@@ -21,7 +21,7 @@ public class ProjectsController : ControllerBase
   }
 
   [HttpPost]
-  public async Task<ActionResult> CreateProject([FromHeader] Guid userId, [FromBody] CreateProjectRequest request)
+  public async Task<ActionResult<UserProjectResponse>> CreateProject([FromHeader] Guid userId, [FromBody] CreateProjectRequest request)
   {
     return await _projectsService.CreateProject(userId, request);
   }
