@@ -24,7 +24,8 @@ public class UserStoriesController : ControllerBase
   }
 
   [HttpPost("user-stories")]
-  public async Task<ActionResult<UserStoryResponse>> CreateUserStory([FromHeader] Guid userId, string projectName, [FromBody] CreateUserStoryRequest request)
+  public async Task<ActionResult<UserStoryResponse>> CreateUserStory([FromHeader] Guid userId, string projectName, 
+    [FromBody] CreateUserStoryRequest request)
   {
     return await _storiesService.CreateUserStory(userId, projectName, request);
   }
@@ -46,6 +47,12 @@ public class UserStoriesController : ControllerBase
     return _storiesService.GetSprintUserStories(userId, projectName, sprintName);
   }
 
+  [HttpPost("sprints/{sprintName}/user-stories/{storyId}")]
+  public async Task<ActionResult> MoveStoryToSprint([FromHeader] Guid userId, 
+    string projectName, string sprintName, Guid storyId)
+  {
+    return await _storiesService.MoveStoryToSprint(userId, storyId, projectName, sprintName);
+  }
   #endregion
 
   

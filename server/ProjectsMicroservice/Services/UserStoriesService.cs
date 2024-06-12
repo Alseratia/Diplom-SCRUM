@@ -29,7 +29,7 @@ public class UserStoriesService
   public ActionResult<ICollection<UserStoryResponse>> GetSprintUserStories(Guid userId, string projectName, string sprintName)
   {
     var dbStories = _db.UserStories.AsNoTracking()
-      .Where(x => x.Sprint.Name == sprintName)
+      .Where(x => x.Sprint!.Name == sprintName)
       .Include(x => x.Tasks);
 
     var stories = dbStories.Select(x => MapStoryResponse(x));
@@ -61,6 +61,7 @@ public class UserStoriesService
       Text = request.Text,
       Title = request.Title,
       ProjectId = project.Id,
+      Priority = request.Priority,
       Tasks = new List<StoryTask>()
     };
     _db.UserStories.Add(newStory);
@@ -79,13 +80,21 @@ public class UserStoriesService
     return new OkResult();
   }
 
-  public async Task<ActionResult> MoveStoryToSprint(Guid userId, Guid userStoryId, Guid sprintId)
+  public async Task<ActionResult> MoveStoryToSprint(Guid userId, Guid storyId, string projectName, string sprintName)
   {
+    var sprint = _db.Users.Where(x => x.Id == userId)
+      .SelectMany(x => x.Members!.Select(m => m.Project))
+      .Where(x => x.Name == projectName)
+      .SelectMany(x => x.Sprints)
+      .FirstOrDefault(x => x.Name == sprintName);
+    
+    if (sprint == null) return new NotFoundResult();
+    
     var result = await _db.UserStories
-      .Where(x => x.Id == userStoryId)
+      .Where(x => x.Id == storyId)
       .ExecuteUpdateAsync(x => 
         x.SetProperty(p => p.ProjectId, v => null)
-        .SetProperty(p => p.SprintId, v => sprintId));
+        .SetProperty(p => p.SprintId, v => sprint.Id));
 
     if (result == 0) return new NotFoundResult();
     

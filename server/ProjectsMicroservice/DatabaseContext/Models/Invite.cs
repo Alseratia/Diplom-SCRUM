@@ -15,9 +15,10 @@ public class Invite
   public DateTime CreatedAt { get; set; }
   public Guid UserId { get; set; }
   public Guid ProjectId { get; set; }
-  
-  [ForeignKey(nameof(UserId))]
-  public User? User { get; set; }
-  [ForeignKey(nameof(ProjectId))]
-  public Project? Project { get; set; }
+
+  [ForeignKey(nameof(UserId))] 
+  public virtual User User { get; set; } = null!;
+
+  [ForeignKey(nameof(ProjectId))] 
+  public virtual Project Project { get; set; } = null!;
 }

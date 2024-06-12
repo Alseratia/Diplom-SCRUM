@@ -1,6 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 using ProjectsMicroservice.DatabaseContext;
+using ProjectsMicroservice.Hubs;
 using ProjectsMicroservice.Services;
+using Shared;
 
 namespace ProjectsMicroservice;
 
@@ -12,6 +14,8 @@ public class Startup
   
   public void ConfigureServices(IServiceCollection services)
   {
+    services.AddSignalR();
+    
     services.AddProjectsMicroserviceDatabaseContext(Configuration["PROJECTS_DB_CONNECTION_STRING"]!);
     services.AddDatabaseMigration();
 
@@ -19,7 +23,8 @@ public class Startup
       .AddScoped<TasksService>()
       .AddScoped<UserStoriesService>()
       .AddScoped<UserService>()
-      .AddScoped<SprintsService>();
+      .AddScoped<SprintsService>()
+      .AddScoped<RabbitMQProducer>();
 
     services.AddControllers().AddJsonOptions(x =>
     {
@@ -38,6 +43,7 @@ public class Startup
 
     app.UseEndpoints(x =>
     {
+      x.MapHub<ProjectHub>("/api/v1/projects-hub");
       x.MapControllers();
     });
   }

@@ -9,9 +9,10 @@ public class User
   public Guid Id { get; set; }
   public string Name { get; set; } = null!;
   public string? Avatar { get; set; }
-  
-  [InverseProperty("User")]
-  public ICollection<Invite>? Invites { get; set; }
-  [InverseProperty("User")]
-  public ICollection<Member>? Members { get; set; }
+
+  [InverseProperty("User")] 
+  public virtual ICollection<Invite> Invites { get; set; } = null!;
+
+  [InverseProperty("User")] 
+  public virtual ICollection<Member> Members { get; set; } = null!;
 }

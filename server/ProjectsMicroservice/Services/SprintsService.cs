@@ -1,18 +1,20 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ProjectsMicroservice.Controllers.Requests;
 using ProjectsMicroservice.Controllers.Responses;
 using ProjectsMicroservice.DatabaseContext;
 using ProjectsMicroservice.DatabaseContext.Models;
+using Shared;
 
 namespace ProjectsMicroservice.Services;
 
 public class SprintsService
 {
   private readonly ApplicationDbContext _db;
-
-  public SprintsService(ApplicationDbContext db)
-    => _db = db;
+  private readonly RabbitMQProducer _rabbitMQProducer;
+  public SprintsService(ApplicationDbContext db, RabbitMQProducer rabbitMQProducer)
+    => (_db, _rabbitMQProducer) = (db, rabbitMQProducer);
 
   public ActionResult<ICollection<SprintResponse>> GetProjectSprints(Guid userId, 
     string projectName)
@@ -71,12 +73,28 @@ public class SprintsService
       .Where(x => x.Name == projectName)
       .SelectMany(x => x.Sprints)
       .FirstOrDefault(x => x.Name == sprintName);
+    
     if (sprint == null) return new NotFoundResult();
 
     sprint.Start = request.Start;
     sprint.End = request.End;
-
+    
     await _db.SaveChangesAsync();
+    
+    var members = _db.Projects
+      .Include(p => p.Members)
+      .Where(p => p.Id == sprint.ProjectId)
+      .SelectMany(p => p.Members);
+    
+    foreach (var member in members)
+    {
+      _rabbitMQProducer.Produce(new NotificationModel()
+        {
+          Title = $"{projectName}",
+          Message = $"Sprint `{sprint.Name}` is planned {sprint.Start} - {sprint.End}",
+          UserId = member.UserId.ToString()
+        });
+    }
     return new OkResult();
   }
 }

@@ -1,21 +1,41 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProjectsMicroservice.Controllers.Responses;
+using ProjectsMicroservice.DatabaseContext;
 
 namespace ProjectsMicroservice.Controllers;
 
-// [Route("api/v1/")]
-// [ApiController]
-// public class ParticipantsController : ControllerBase
-// {
-//   [HttpGet("projects/{projectId}/members")]
-//   public ActionResult GetProjectMembers(Guid projectId)
-//   {
-//     return Ok();
-//   }
-//   
-//   [HttpDelete("members/{memberId}")]
-//   public ActionResult DeleteProjectMember(Guid participantId)
-//   {
-//     return Ok();
-//   }
-//   
-// }
+[Route("api/v1/projects/{projectName}/members")]
+[ApiController]
+public class MembersController : ControllerBase
+{
+  private readonly ApplicationDbContext _db;
+  public MembersController(ApplicationDbContext db)
+    => _db = db;
+  
+  [HttpGet]
+  public ActionResult<ICollection<MembersResponse>> GetProjectMembers([FromHeader] Guid userId, string projectName)
+  {
+    var members = _db.Users.Where(x => x.Id == userId)
+      .SelectMany(x => x.Members)
+      .Include(x => x.User)
+      .Where(x => x.Project.Name == projectName).ToList();
+
+    return Ok(members.Select(x => new MembersResponse()
+    {
+      Id = x.Id,
+      Role = x.Role,
+      Avatar = x.User.Avatar,
+      Name = x.User.Name
+    }));
+  }
+  
+  [HttpDelete("{memberId}")]
+  public async Task<ActionResult> DeleteProjectMember([FromHeader] Guid userId, string projectName, Guid memberId)
+  {
+    var result = await _db.Members.Where(x => x.Id == memberId).ExecuteDeleteAsync();
+    if (result == 0) return NotFound();
+    return Ok();
+  }
+  
+}
