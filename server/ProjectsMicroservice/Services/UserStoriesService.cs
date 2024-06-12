@@ -15,7 +15,7 @@ public class UserStoriesService
   public UserStoriesService(ApplicationDbContext db)
     => _db = db;
 
-  public ActionResult<ICollection<UserStoryResponse>> GetProjectUserStories(string projectName)
+  public ActionResult<ICollection<UserStoryResponse>> GetProjectUserStories(Guid userId, string projectName)
   {
     var dbStories = _db.UserStories.AsNoTracking()
         .Include(x => x.Project)
@@ -26,10 +26,10 @@ public class UserStoriesService
     return new OkObjectResult(stories);
   }
 
-  public ActionResult<ICollection<UserStoryResponse>> GetSprintUserStories(Guid sprintId)
+  public ActionResult<ICollection<UserStoryResponse>> GetSprintUserStories(Guid userId, string projectName, string sprintName)
   {
     var dbStories = _db.UserStories.AsNoTracking()
-      .Where(x => x.SprintId == sprintId)
+      .Where(x => x.Sprint.Name == sprintName)
       .Include(x => x.Tasks);
 
     var stories = dbStories.Select(x => MapStoryResponse(x));
@@ -69,7 +69,7 @@ public class UserStoriesService
     return new OkObjectResult(MapStoryResponse(newStory));
   }
 
-  public async Task<ActionResult> DeleteUserStory(string projectName, Guid storyId)
+  public async Task<ActionResult> DeleteUserStory(Guid userId, string projectName, Guid storyId)
   {
     var result = await _db.UserStories
       .Where(x => x.Id == storyId)
@@ -79,7 +79,7 @@ public class UserStoriesService
     return new OkResult();
   }
 
-  public async Task<ActionResult> MoveStoryToSprint(Guid userStoryId, Guid sprintId)
+  public async Task<ActionResult> MoveStoryToSprint(Guid userId, Guid userStoryId, Guid sprintId)
   {
     var result = await _db.UserStories
       .Where(x => x.Id == userStoryId)

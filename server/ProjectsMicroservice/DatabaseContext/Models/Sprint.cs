@@ -12,7 +12,7 @@ public class Sprint
   public DateTime? End { get; set; }
   public DateTime CreatedAt { get; set; }
   public Guid ProjectId { get; set; }
-  
-  [ForeignKey(nameof(ProjectId))]
-  public Project? Project { get; set; }
+
+  [ForeignKey(nameof(ProjectId))] 
+  public virtual Project Project { get; set; } = null!;
 }

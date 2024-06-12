@@ -20,7 +20,7 @@ public class UserStoriesController : ControllerBase
   [HttpGet("user-stories")]
   public ActionResult<ICollection<UserStoryResponse>> GetProjectUserStories([FromHeader] Guid userId, string projectName)
   {
-    return _storiesService.GetProjectUserStories(projectName);
+    return _storiesService.GetProjectUserStories(userId, projectName);
   }
 
   [HttpPost("user-stories")]
@@ -29,18 +29,10 @@ public class UserStoriesController : ControllerBase
     return await _storiesService.CreateUserStory(userId, projectName, request);
   }
   
-  // TODO 
-  [HttpPost("user-stories/{userStoryId}")]
-  public async Task<ActionResult> MoveUserStory(Guid userStoryId, [FromQuery] string sprintName)
-  {
-    return Ok();
-    //return await _storiesService.MoveStoryToSprint(userStoryId, sprintName);
-  }
-  
   [HttpDelete("user-stories/{userStoryId}")]
-  public async Task<ActionResult> DeleteUserStory(string projectName, Guid userStoryId)
+  public async Task<ActionResult> DeleteUserStory([FromHeader] Guid userId, string projectName, Guid userStoryId)
   {
-    return await _storiesService.DeleteUserStory(projectName, userStoryId);
+    return await _storiesService.DeleteUserStory(userId, projectName, userStoryId);
   }
   
   #endregion
@@ -48,10 +40,10 @@ public class UserStoriesController : ControllerBase
   #region Из спринта
 
   [HttpGet("sprints/{sprintName}/user-stories")]
-  public ActionResult<ICollection<UserStoryResponse>> GetSprintUserStories(string sprintName)
+  public ActionResult<ICollection<UserStoryResponse>> GetSprintUserStories([FromHeader] Guid userId, 
+    string projectName, string sprintName)
   {
-    return Ok();
-    //return _storiesService.GetSprintUserStories(sprintName);
+    return _storiesService.GetSprintUserStories(userId, projectName, sprintName);
   }
 
   #endregion

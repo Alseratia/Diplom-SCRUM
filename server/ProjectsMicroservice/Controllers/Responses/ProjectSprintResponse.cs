@@ -1,6 +1,6 @@
 ﻿namespace ProjectsMicroservice.Controllers.Responses;
 
-public class ProjectSprintResponse
+public class SprintResponse
 {
   public Guid Id { get; set; }
   public string Name { get; set; } = null!;

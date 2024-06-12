@@ -18,7 +18,8 @@ public class Startup
     services.AddScoped<ProjectsService>()
       .AddScoped<TasksService>()
       .AddScoped<UserStoriesService>()
-      .AddScoped<UserService>();
+      .AddScoped<UserService>()
+      .AddScoped<SprintsService>();
 
     services.AddControllers().AddJsonOptions(x =>
     {

@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using ProjectsMicroservice.Controllers.Requests;
+using ProjectsMicroservice.Controllers.Responses;
+using ProjectsMicroservice.Services;
 
 namespace ProjectsMicroservice.Controllers;
 
@@ -8,17 +10,24 @@ namespace ProjectsMicroservice.Controllers;
 [ApiController]
 public class SprintsController : ControllerBase
 {
+  private readonly SprintsService _sprintsService;
+
+  public SprintsController(SprintsService sprintsService)
+    => _sprintsService = sprintsService;
+  
   [HttpGet]
-  public ActionResult GetProjectSprints([FromHeader] Guid userId, [Required] string projectName)
+  public ActionResult<ICollection<SprintResponse>> GetProjectSprints([FromHeader] Guid userId, 
+    [Required] string projectName)
   {
-    return Ok();
+    return _sprintsService.GetProjectSprints(userId, projectName);
   }
   
   [HttpPost]
-  public ActionResult CreateProjectSprint([FromHeader] Guid userId, [Required] string projectName, 
+  public async Task<ActionResult<SprintResponse>> CreateProjectSprint([FromHeader] Guid userId, 
+    [Required] string projectName, 
     [FromBody] CreateSprintRequest request)
   {
-    return Ok();
+    return await _sprintsService.CreateProjectSprint(userId, projectName, request);
   }
   
   [HttpDelete("{sprintName}")]
@@ -29,9 +38,9 @@ public class SprintsController : ControllerBase
   }
   
   [HttpPost("{sprintName}/start")]
-  public ActionResult StartSprint([FromHeader] Guid userId, [Required] string projectName, 
+  public async Task<ActionResult> StartSprint([FromHeader] Guid userId, [Required] string projectName, 
     [Required] string sprintName, [FromBody] StartSprintRequest request)
   {
-    return Ok();
+    return await _sprintsService.StartSprint(userId, projectName, sprintName, request);
   }
 }

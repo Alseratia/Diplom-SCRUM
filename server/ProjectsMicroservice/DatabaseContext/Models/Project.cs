@@ -23,4 +23,8 @@ public class Project
   [Required]
   [InverseProperty(nameof(Project))]
   public virtual ICollection<UserStory> UserStories { get; set; } = null!;
+  
+  [Required]
+  [InverseProperty(nameof(Project))]
+  public virtual ICollection<Sprint> Sprints { get; set; } = null!;
 }
