@@ -78,7 +78,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/v1/users",
-      "UpstreamHttpMethod": [ "POST" ]
+      "UpstreamHttpMethod": [ "POST", "GET" ]
     },
     {
       "SwaggerKey": "ProjectsMicroservice",

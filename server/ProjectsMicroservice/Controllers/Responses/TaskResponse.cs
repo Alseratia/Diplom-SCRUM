@@ -2,7 +2,7 @@
 
 namespace ProjectsMicroservice.Controllers.Responses;
 
-public class StoryTaskResponse
+public class TaskResponse
 {
   public Guid Id { get; set; }
   [Required]

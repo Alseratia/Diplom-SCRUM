@@ -15,7 +15,7 @@ public class UserStoriesService
   public UserStoriesService(ApplicationDbContext db)
     => _db = db;
 
-  public ActionResult<ICollection<UserStoryResponse>> GetProjectUserStories(Guid userId, string projectName)
+  public ActionResult<ICollection<StoryResponse>> GetProjectUserStories(Guid userId, string projectName)
   {
     var dbStories = _db.UserStories.AsNoTracking()
         .Include(x => x.Project)
@@ -26,7 +26,7 @@ public class UserStoriesService
     return new OkObjectResult(stories);
   }
 
-  public ActionResult<ICollection<UserStoryResponse>> GetSprintUserStories(Guid userId, string projectName, string sprintName)
+  public ActionResult<ICollection<StoryResponse>> GetSprintUserStories(Guid userId, string projectName, string sprintName)
   {
     var dbStories = _db.UserStories.AsNoTracking()
       .Where(x => x.Sprint!.Name == sprintName)
@@ -36,7 +36,7 @@ public class UserStoriesService
     return new OkObjectResult(stories);
   }
 
-  public ActionResult<ICollection<UserStoryResponse>> GetUserUserStories(Guid userId)
+  public ActionResult<ICollection<StoryResponse>> GetUserUserStories(Guid userId)
   {
     var dbStories = _db.UserStories.AsNoTracking()
       .Where(x => x.UserId == userId)
@@ -46,7 +46,7 @@ public class UserStoriesService
     return new OkObjectResult(stories);
   }
   
-  public async Task<ActionResult<UserStoryResponse>> CreateUserStory(Guid userId, string projectName, CreateUserStoryRequest request)
+  public async Task<ActionResult<StoryResponse>> CreateUserStory(Guid userId, string projectName, CreateUserStoryRequest request)
   {
     var project = _db.Users.Where(x => x.Id == userId)
       .Include(x => x.Members)
@@ -101,9 +101,9 @@ public class UserStoriesService
     return new OkResult();
   }
 
-  private static UserStoryResponse MapStoryResponse(UserStory story)
+  private static StoryResponse MapStoryResponse(UserStory story)
   {
-    return new UserStoryResponse()
+    return new StoryResponse()
     {
       Id = story.Id,
       Title = story.Title,
@@ -114,7 +114,7 @@ public class UserStoriesService
       Start = story.Start,
       End = story.End,
       UserId = story.UserId,
-      Tasks = story.Tasks.Select(t => new StoryTaskResponse()
+      Tasks = story.Tasks.Select(t => new TaskResponse()
       {
         Id = t.Id,
         Title = t.Title,

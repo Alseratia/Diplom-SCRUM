@@ -14,7 +14,7 @@ public class TasksService
   public TasksService(ApplicationDbContext db)
     => _db = db;
 
-  public async Task<ActionResult<StoryTaskResponse>> CreateTask(Guid userId, string projectName, Guid userStoryId, CreateStoryTaskRequest request)
+  public async Task<ActionResult<TaskResponse>> CreateTask(Guid userId, string projectName, Guid userStoryId, CreateStoryTaskRequest request)
   {
     var story = await _db.UserStories.FindAsync(userStoryId);
     if (story == null) return new NotFoundResult();
@@ -30,7 +30,7 @@ public class TasksService
     _db.Tasks.Add(task);
     await _db.SaveChangesAsync();
     
-    return new OkObjectResult(new StoryTaskResponse()
+    return new OkObjectResult(new TaskResponse()
     {
       Id = task.Id,
       Title = task.Title,

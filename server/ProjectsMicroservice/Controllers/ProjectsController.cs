@@ -19,7 +19,13 @@ public class ProjectsController : ControllerBase
   {
     return _projectsService.GetAllUserProjects(userId);
   }
-
+  
+  [HttpGet("{projectName}")]
+  public async Task<ActionResult<UserProjectResponse>> GetAllUserProject([FromHeader] Guid userId, string projectName)
+  {
+    return await _projectsService.GetUserProject(userId, projectName);
+  }
+  
   [HttpPost]
   public async Task<ActionResult<UserProjectResponse>> CreateProject([FromHeader] Guid userId, [FromBody] CreateProjectRequest request)
   {

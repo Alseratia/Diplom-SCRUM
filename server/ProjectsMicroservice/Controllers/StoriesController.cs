@@ -8,23 +8,23 @@ namespace ProjectsMicroservice.Controllers;
 
 [Route("/api/v1/projects/{projectName}")]
 [ApiController]
-public class UserStoriesController : ControllerBase
+public class StoriesController : ControllerBase
 {
   private readonly UserStoriesService _storiesService;
   
-  public UserStoriesController(UserStoriesService storiesService)
+  public StoriesController(UserStoriesService storiesService)
     => _storiesService = storiesService;
 
   #region Из проекта
 
   [HttpGet("user-stories")]
-  public ActionResult<ICollection<UserStoryResponse>> GetProjectUserStories([FromHeader] Guid userId, string projectName)
+  public ActionResult<ICollection<StoryResponse>> GetProjectUserStories([FromHeader] Guid userId, string projectName)
   {
     return _storiesService.GetProjectUserStories(userId, projectName);
   }
 
   [HttpPost("user-stories")]
-  public async Task<ActionResult<UserStoryResponse>> CreateUserStory([FromHeader] Guid userId, string projectName, 
+  public async Task<ActionResult<StoryResponse>> CreateUserStory([FromHeader] Guid userId, string projectName, 
     [FromBody] CreateUserStoryRequest request)
   {
     return await _storiesService.CreateUserStory(userId, projectName, request);
@@ -41,7 +41,7 @@ public class UserStoriesController : ControllerBase
   #region Из спринта
 
   [HttpGet("sprints/{sprintName}/user-stories")]
-  public ActionResult<ICollection<UserStoryResponse>> GetSprintUserStories([FromHeader] Guid userId, 
+  public ActionResult<ICollection<StoryResponse>> GetSprintUserStories([FromHeader] Guid userId, 
     string projectName, string sprintName)
   {
     return _storiesService.GetSprintUserStories(userId, projectName, sprintName);

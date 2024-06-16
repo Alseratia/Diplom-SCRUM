@@ -4,7 +4,7 @@ using ProjectsMicroservice.DatabaseContext.Models;
 
 namespace ProjectsMicroservice.Controllers.Responses;
 
-public class UserStoryResponse
+public class StoryResponse
 {
   public Guid Id { get; set; }
   [Required]
@@ -18,5 +18,5 @@ public class UserStoryResponse
   public DateTime? End { get; set; }
   public Guid? UserId { get; set; }
 
-  public ICollection<StoryTaskResponse> Tasks { get; set; } = null!;
+  public ICollection<TaskResponse> Tasks { get; set; } = null!;
 }

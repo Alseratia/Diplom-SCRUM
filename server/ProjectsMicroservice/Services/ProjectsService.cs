@@ -63,6 +63,25 @@ public class ProjectsService
     return new OkObjectResult(response);
   }
 
+  public async Task<ActionResult<UserProjectResponse>> GetUserProject(Guid userId, string projectName)
+  {
+    var member = await _db.Members.AsNoTracking()
+      .Include(x => x.Project)
+      .FirstOrDefaultAsync(x => x.UserId == userId && x.Project.Name == projectName);
+    if (member == null) return new NotFoundResult();
+    
+    var response = new UserProjectResponse()
+    {
+      Id = member.Project!.Id,
+      Name = member.Project.Name,
+      Avatar = member.Project.Avatar,
+      Role = member.Role,
+      CreatedAt = member.Project.CreatedAt,
+      ClosedAt = member.Project.ClosedAt
+    };
+    return new OkObjectResult(response);
+  }
+  
   public async Task<ActionResult> DeleteProject(Guid userId, string projectName)
   {
     var result = await _db.Members

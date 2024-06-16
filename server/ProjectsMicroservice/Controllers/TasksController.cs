@@ -8,15 +8,15 @@ namespace ProjectsMicroservice.Controllers;
 
 [Route("/api/v1/projects/{projectName}/user-stories/{storyId}/tasks")]
 [ApiController]
-public class StoryTasksController : ControllerBase
+public class TasksController : ControllerBase
 {
   private readonly TasksService _taskService;
 
-  public StoryTasksController(TasksService taskService)
+  public TasksController(TasksService taskService)
     => _taskService = taskService;
   
   [HttpPost]
-  public async Task<ActionResult<StoryTaskResponse>> CreateTask([FromHeader] Guid userId, string projectName, Guid storyId, CreateStoryTaskRequest request)
+  public async Task<ActionResult<TaskResponse>> CreateTask([FromHeader] Guid userId, string projectName, Guid storyId, CreateStoryTaskRequest request)
   {
     return await _taskService.CreateTask(userId, projectName, storyId, request);
   }
