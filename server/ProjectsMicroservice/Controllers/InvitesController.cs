@@ -4,6 +4,7 @@ using ProjectsMicroservice.Controllers.Requests;
 using ProjectsMicroservice.Controllers.Responses;
 using ProjectsMicroservice.DatabaseContext;
 using ProjectsMicroservice.DatabaseContext.Models;
+using Shared;
 
 namespace ProjectsMicroservice.Controllers;
 
@@ -12,9 +13,9 @@ namespace ProjectsMicroservice.Controllers;
 public class InvitesController : ControllerBase
 {
   private readonly ApplicationDbContext _db;
-
-  public InvitesController(ApplicationDbContext db)
-    => (_db) = (db);
+  private readonly RabbitMQProducer _rabbitMQProducer;
+  public InvitesController(ApplicationDbContext db, RabbitMQProducer rabbitMQProducer)
+    => (_db, _rabbitMQProducer) = (db, rabbitMQProducer);
   
   [HttpGet]
   public ActionResult<ICollection<ProjectInviteResponse>> GetProjectInvites([FromHeader] Guid userId, string projectName)
@@ -62,6 +63,14 @@ public class InvitesController : ControllerBase
       ProjectId = projectWithInvites.Id
     });
     _db.SaveChanges();
+    
+    // уведомление
+    _rabbitMQProducer.Produce(new NotificationModel()
+    {
+      Title = "Приглашение в проект",
+      Message = $"Вас пригласили в проект {projectName}",
+      UserId = user.Id.ToString()
+    });
     
     return Ok();
   }

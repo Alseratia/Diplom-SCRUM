@@ -78,7 +78,27 @@
         }
       ],
       "UpstreamPathTemplate": "/api/v1/users",
-      "UpstreamHttpMethod": [ "POST", "GET" ]
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "SwaggerKey": "ProjectsMicroservice",
+      "DownstreamPathTemplate": "/api/v1/users",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "projects-microservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/users",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[UserId] > value"
+      }
     },
     {
       "SwaggerKey": "ProjectsMicroservice",

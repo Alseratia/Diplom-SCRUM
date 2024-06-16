@@ -91,7 +91,7 @@ public class SprintsService
       _rabbitMQProducer.Produce(new NotificationModel()
         {
           Title = $"{projectName}",
-          Message = $"Sprint `{sprint.Name}` is planned {sprint.Start} - {sprint.End}",
+          Message = $"Спринт `{sprint.Name}` запланирован на {sprint.Start} - {sprint.End}",
           UserId = member.UserId.ToString()
         });
     }
