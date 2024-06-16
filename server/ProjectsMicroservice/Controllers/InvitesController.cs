@@ -75,22 +75,6 @@ public class InvitesController : ControllerBase
     return Ok();
   }
   
-  [HttpPost("{inviteId}/accept")]
-  public ActionResult AcceptUserInvite([FromHeader] Guid userId, Guid inviteId)
-  {
-    var invite = _db.Invites.Find(inviteId);
-    var newMember = new Member()
-    {
-      Id = Guid.NewGuid(),
-      ProjectId = invite.ProjectId,
-      UserId = invite.UserId,
-      Role = invite.Role
-    };
-    _db.Invites.Remove(invite);
-    _db.Members.Add(newMember);
-    _db.SaveChanges();
-    return Ok();
-  }
   
   [HttpDelete("{inviteId}")]
   public IActionResult RevokeProjectInvite([FromHeader] Guid userId, string projectName, 
