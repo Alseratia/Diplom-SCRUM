@@ -17,7 +17,7 @@ public class NotificationsController : ControllerBase
   public async Task<ActionResult<ICollection<Notification>>> GetNotifications([FromHeader] Guid userId)
   {
     var notifications = await _db.Notifications.Where(x => x.UserId == userId).ToListAsync();
-
+    
     return new OkObjectResult(notifications);
   }
 

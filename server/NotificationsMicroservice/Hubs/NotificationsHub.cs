@@ -27,23 +27,4 @@ public class NotificationsHub : Hub
         x.SetProperty(property => property.ReadAt, value => DateTime.Now)
       );
   }
-
-  // тестовые
-  public async Task SendNotificationToChannel(string userId)
-  {
-    var note = new Notification()
-    {
-      CreatedAt = DateTime.Now,
-      Id = Guid.NewGuid(),
-      Message = "Новое уведомление",
-      Title = "Новое уведомление"
-    };
-    await Clients.Group(userId).SendAsync("NewNotification", note);
-  }
-  
-  public async Task TestNotification(string userId)
-  {
-    await Clients.Client(userId).SendAsync("Test", "Тест");
-  }
-  
 }

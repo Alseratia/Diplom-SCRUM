@@ -8,7 +8,6 @@ namespace NotificationsMicroservice.DatabaseContext.Models;
 public class Notification
 {
   [Key]
-  [JsonIgnore]
   public Guid Id { get; set; }
   public string Title { get; set; } = null!;
   public string Message { get; set; } = null!;
