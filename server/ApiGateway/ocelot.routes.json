@@ -82,7 +82,7 @@
     },
     {
       "SwaggerKey": "ProjectsMicroservice",
-      "DownstreamPathTemplate": "/api/v1/users",
+      "DownstreamPathTemplate": "/api/v1/users/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -90,8 +90,8 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/v1/users",
-      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/api/v1/users/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT", "PATCH" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
@@ -122,7 +122,7 @@
     },
     {
       "SwaggerKey": "ProjectsMicroservice",
-      "DownstreamPathTemplate": "/api/v1/projects/{some}",
+      "DownstreamPathTemplate": "/api/v1/projects/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -130,8 +130,8 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/v1/projects/{some}",
-      "UpstreamHttpMethod": [ "POST","DELETE","GET" ],
+      "UpstreamPathTemplate": "/api/v1/projects/{everything}",
+      "UpstreamHttpMethod": [ "POST", "DELETE", "GET" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []

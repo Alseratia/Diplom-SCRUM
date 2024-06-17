@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectsMicroservice.Controllers.Requests;
 using ProjectsMicroservice.Controllers.Responses;
@@ -20,7 +19,7 @@ public class SprintsService
     string projectName)
   {
     var sprints = _db.Users.Where(x => x.Id == userId)
-      .SelectMany(x => x.Members!.Select(m => m.Project))
+      .SelectMany(x => x.Members.Select(m => m.Project))
       .Where(x => x.Name == projectName)
       .SelectMany(x => x.Sprints).ToList();
 
@@ -33,12 +32,31 @@ public class SprintsService
       CreatedAt = x.CreatedAt
     }).ToList());
   }
-
+  
+  public ActionResult<SprintResponse> GetProjectSprint(Guid userId, 
+    string projectName, string sprintName)
+  {
+    var sprint = _db.Users.Where(x => x.Id == userId)
+      .SelectMany(x => x.Members.Select(m => m.Project))
+      .Where(x => x.Name == projectName)
+      .SelectMany(x => x.Sprints).FirstOrDefault(x => x.Name == sprintName);
+      
+    if (sprint == null) return new NotFoundResult();
+    
+    return new OkObjectResult(new SprintResponse()
+    {
+      Id = sprint.Id,
+      Name = sprint.Name,
+      Start = sprint.Start,
+      End = sprint.End,
+      CreatedAt = sprint.CreatedAt
+    });
+  }
   public async Task<ActionResult<SprintResponse>> CreateProjectSprint(Guid userId, 
     string projectName, CreateSprintRequest request)
   {
     var project = _db.Users.Where(x => x.Id == userId)
-      .SelectMany(x => x.Members!.Select(m => m.Project))
+      .SelectMany(x => x.Members.Select(m => m.Project))
       .FirstOrDefault(x => x.Name == projectName);
 
     if (project == null) return new NotFoundResult();
@@ -69,7 +87,7 @@ public class SprintsService
     string projectName, string sprintName, StartSprintRequest request)
   {
     var sprint = _db.Users.Where(x => x.Id == userId)
-      .SelectMany(x => x.Members!.Select(m => m.Project))
+      .SelectMany(x => x.Members.Select(m => m.Project))
       .Where(x => x.Name == projectName)
       .SelectMany(x => x.Sprints)
       .FirstOrDefault(x => x.Name == sprintName);

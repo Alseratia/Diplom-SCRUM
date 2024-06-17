@@ -6,7 +6,7 @@ using ProjectsMicroservice.Services;
 
 namespace ProjectsMicroservice.Controllers;
 
-[Route("/api/v1/projects/{projectName}/sprints")]
+[Route("/api/v1/projects/{projectName}/sprints/")]
 [ApiController]
 public class SprintsController : ControllerBase
 {
@@ -20,6 +20,13 @@ public class SprintsController : ControllerBase
     [Required] string projectName)
   {
     return _sprintsService.GetProjectSprints(userId, projectName);
+  }
+  
+  [HttpGet("{sprintName}")]
+  public ActionResult<SprintResponse> GetProjectSprint([FromHeader] Guid userId, 
+    [Required] string projectName, [Required] string sprintName)
+  {
+    return _sprintsService.GetProjectSprint(userId, projectName, sprintName);
   }
   
   [HttpPost]

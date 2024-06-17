@@ -16,10 +16,14 @@ public class MembersController : ControllerBase
   [HttpGet]
   public ActionResult<ICollection<MembersResponse>> GetProjectMembers([FromHeader] Guid userId, string projectName)
   {
-    var members = _db.Users.Where(x => x.Id == userId)
+    var project = _db.Users
+      .Where(x => x.Id == userId)
       .SelectMany(x => x.Members)
-      .Include(x => x.User)
-      .Where(x => x.Project.Name == projectName).ToList();
+      .Select(x => x.Project)
+      .FirstOrDefault(x => x.Name == projectName);
+    
+    var members = _db.Members.Include(x => x.User)
+      .Where(x => x.ProjectId == project!.Id);
 
     return Ok(members.Select(x => new MembersResponse()
     {
