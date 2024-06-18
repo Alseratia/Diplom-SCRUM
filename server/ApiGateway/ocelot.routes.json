@@ -139,8 +139,19 @@
       "AddHeadersToRequest": {
         "UserId": "Claims[UserId] > value"
       }
+    },
+    {
+      "SwaggerKey": "ProjectsMicroservice",
+      "DownstreamPathTemplate": "/api/v1/poker-planning-hub",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "projects-microservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/poker-planning-hub",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
     }
-    
-    
   ]
 }
