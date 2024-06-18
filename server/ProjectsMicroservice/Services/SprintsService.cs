@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjectsMicroservice.Controllers.Requests;
 using ProjectsMicroservice.Controllers.Responses;
 using ProjectsMicroservice.DatabaseContext;
+using ProjectsMicroservice.DatabaseContext.Enums;
 using ProjectsMicroservice.DatabaseContext.Models;
 using Shared;
 
@@ -27,6 +28,7 @@ public class SprintsService
     {
       Id = x.Id,
       Name = x.Name,
+      Status = x.Status,
       Start = x.Start,
       End = x.End,
       CreatedAt = x.CreatedAt
@@ -47,11 +49,13 @@ public class SprintsService
     {
       Id = sprint.Id,
       Name = sprint.Name,
+      Status = sprint.Status,
       Start = sprint.Start,
       End = sprint.End,
       CreatedAt = sprint.CreatedAt
     });
   }
+  
   public async Task<ActionResult<SprintResponse>> CreateProjectSprint(Guid userId, 
     string projectName, CreateSprintRequest request)
   {
@@ -64,6 +68,7 @@ public class SprintsService
     {
       Id = new Guid(),
       Name = request.Name,
+      Status = SprintStatus.Planning,
       CreatedAt = DateTime.Now,
       ProjectId = project.Id
     };
@@ -74,6 +79,7 @@ public class SprintsService
     {
       Id = newSprint.Id,
       Name = request.Name,
+      Status = newSprint.Status,
       CreatedAt = newSprint.CreatedAt
     };
   }
@@ -94,6 +100,7 @@ public class SprintsService
     
     if (sprint == null) return new NotFoundResult();
 
+    sprint.Status = SprintStatus.InProgress;
     sprint.Start = request.Start;
     sprint.End = request.End;
     

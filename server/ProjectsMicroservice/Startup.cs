@@ -44,6 +44,7 @@ public class Startup
     app.UseEndpoints(x =>
     {
       x.MapHub<ProjectHub>("/api/v1/projects-hub");
+      x.MapHub<PokerPlanningHub>("/api/v1/poker-planning-hub");
       x.MapControllers();
     });
   }
