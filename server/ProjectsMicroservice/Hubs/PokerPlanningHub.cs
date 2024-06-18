@@ -16,4 +16,14 @@ public class PokerPlanningHub : Hub
     await Clients.Groups(sprintId).SendAsync("MemberJoined", memberId, name, avatar);
     await Groups.AddToGroupAsync(Context.ConnectionId, sprintId);
   }
+
+  public async Task SendCurrentMark(string sprintId, string memberId, int mark)
+  {
+    await Clients.Groups(sprintId).SendAsync("MarkSended", memberId, mark);
+  }
+
+  public async Task SendFinalMark(string sprintId, string storyId, int mark)
+  {
+    
+  }
 }
