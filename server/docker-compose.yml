@@ -82,15 +82,15 @@ services:
       - "15672:15672"
     networks:
       - main-network 
-#  chats-db:
-#    container_name: "chats-db"
-#    image: postgres:16-alpine
-#    env_file:
-#      - chats-db.env
-#    ports:
-#      - "5051:5432"
-#    networks:
-#      - main-network
+  chats-db:
+    container_name: "chats-db"
+    image: postgres:16-alpine
+    env_file:
+      - chats-db.env
+    ports:
+      - "5051:5432"
+    networks:
+      - main-network
 #  
 #  content-db:
 #    container_name: "content-db"

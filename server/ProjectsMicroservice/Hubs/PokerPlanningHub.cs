@@ -22,8 +22,13 @@ public class PokerPlanningHub : Hub
     await Clients.Groups(sprintId).SendAsync("MarkSended", memberId, mark);
   }
 
-  public async Task SendFinalMark(string sprintId, string storyId, int mark)
+  public async Task SendFinalMark(string sprintId, Guid storyId, int mark)
   {
+    using (var db = await _dbFactory.CreateDbContextAsync())
+    {
+      await db.UserStories.Where(x => x.Id == storyId)
+        .ExecuteUpdateAsync(x => x.SetProperty(p => p.Mark, mark));
+    }
     
   }
 }

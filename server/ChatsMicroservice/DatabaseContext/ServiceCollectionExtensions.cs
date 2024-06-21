@@ -5,7 +5,7 @@ namespace ChatsMicroservice.DatabaseContext;
 public static class ServiceCollectionExtensions
 {
 
-  public static IServiceCollection AddNotificationsMicroserviceDatabaseContext(this IServiceCollection services, string connectionString)
+  public static IServiceCollection AddChatsMicroserviceDatabaseContext(this IServiceCollection services, string connectionString)
   {
     AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     //services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
