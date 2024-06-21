@@ -16,7 +16,8 @@ public class TasksController : ControllerBase
     => _taskService = taskService;
   
   [HttpPost]
-  public async Task<ActionResult<TaskResponse>> CreateTask([FromHeader] Guid userId, string projectName, Guid storyId, CreateStoryTaskRequest request)
+  public async Task<ActionResult<TaskResponse>> CreateTask([FromHeader] Guid userId, string projectName, 
+    Guid storyId, [FromBody] CreateStoryTaskRequest request)
   {
     return await _taskService.CreateTask(userId, projectName, storyId, request);
   }
