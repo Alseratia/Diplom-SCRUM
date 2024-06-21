@@ -152,6 +152,60 @@
       ],
       "UpstreamPathTemplate": "/api/v1/poker-planning-hub",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+    },
+
+    {
+      "SwaggerKey": "ChatsMicroservice",
+      "DownstreamPathTemplate": "/api/v1/chats",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "chats-microservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/chats",
+      "UpstreamHttpMethod": [ "POST", "DELETE", "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[UserId] > value"
+      }
+    },
+    {
+      "SwaggerKey": "ChatsMicroservice",
+      "DownstreamPathTemplate": "/api/v1/chats/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "chats-microservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/chats/{everything}",
+      "UpstreamHttpMethod": [ "POST", "DELETE", "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "UserId": "Claims[UserId] > value"
+      }
+    },
+    {
+      "SwaggerKey": "ChatsMicroservice",
+      "DownstreamPathTemplate": "/api/v1/chats-hub",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "chats-microservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/chats-hub",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
     }
   ]
 }
