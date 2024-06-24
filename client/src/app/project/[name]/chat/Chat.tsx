@@ -23,16 +23,16 @@ export const Chat = ({
     setMessages([
       {
         createdAt: new Date(),
-        text: "Gandon",
+        text: "...",
         userId: "1",
       },
-      { createdAt: new Date(), text: "Urod", userId: "2" },
-      { createdAt: new Date(), text: "Gandon", userId: "1" },
-      { createdAt: new Date(), text: "Gandon", userId: user.userId },
+      { createdAt: new Date(), text: "qq", userId: "2" },
+      { createdAt: new Date(), text: "Privet", userId: "1" },
+      { createdAt: new Date(), text: "Poka", userId: user.userId },
     ]);
   }, [projectName]);
   return (
-    <div className="flex h-full w-4/5 flex-col rounded-xl border border-neutral-800/60 bg-neutral-950">
+    <div className="flex h-full w-4/5 flex-col rounded-xl border border-neutral-950/30 shadow-sm">
       {/* messages */}
       <div className="flex-1">
         {messages.map((message, idx) => (
@@ -42,7 +42,7 @@ export const Chat = ({
           >
             <div className="flex items-center gap-4">
               {/* avatar */}
-              <span className="rounded-full border border-white">
+              <span className="rounded-full border border-black shadow-md">
                 {user.avatar ? (
                   <Image
                     src={user.avatar}
@@ -53,7 +53,7 @@ export const Chat = ({
                   />
                 ) : (
                   <span>
-                    <User color="#FFFFFF" size={40} />
+                    <User color="#000" size={40} />
                   </span>
                 )}
               </span>
@@ -72,7 +72,7 @@ export const Chat = ({
           </div>
         ))}
       </div>
-      <div className="flex w-full gap-4 border-t border-neutral-800/60 p-6">
+      <div className="flex w-full gap-4 border-t border-neutral-950/30 p-6">
         <Input
           placeholder="Введите сообщение"
           value={input}

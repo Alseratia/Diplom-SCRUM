@@ -49,7 +49,7 @@ export const BurnBarrel = ({
       onDrop={(e) => handleDrop(e)}
       onDragOver={(e) => handleDragOver(e)}
       onDragLeave={(e) => handleDragLeave(e)}
-      className={`${active ? "border-red-800 bg-red-800/20 text-red-500" : "border-neutral-800/60 bg-neutral-900/30 text-neutral-500"} mt-[54px] grid size-56 shrink-0 place-content-center rounded-xl border text-3xl`}
+      className={`${active ? "border-red-800 bg-red-800/20 text-red-500" : "border-neutral-950/30 bg-neutral-900/30 text-neutral-500"} mt-[54px] grid size-56 shrink-0 place-content-center rounded-xl border text-3xl`}
     >
       {active ? <FlameIcon className="animate-bounce" /> : <Trash />}
     </div>

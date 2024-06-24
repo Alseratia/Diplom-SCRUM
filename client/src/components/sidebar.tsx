@@ -47,13 +47,13 @@ export const Sidebar = () => {
   });
 
   return (
-    <div className="border-r border-neutral-800/60 px-8 py-6">
+    <div className="border-r border-neutral-950/30 px-8 py-6">
       <ul className="grid gap-4">
         {filteredItems.map((item) => (
           <Link
             key={item.name}
             href={`/project/${name}/${item.link}`}
-            className={`${pathname.includes(item.link) ? "outline outline-1 outline-neutral-800" : ""} rounded-xl px-3 py-2 text-neutral-200 transition-colors duration-150 hover:text-neutral-300 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-neutral-800/60`}
+            className={`${pathname.includes(item.link) ? "outline outline-1 outline-neutral-800/40" : ""} rounded-xl px-3 py-2 text-neutral-950 transition-colors duration-150 hover:text-neutral-700 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-neutral-950/30`}
           >
             {item.name}
           </Link>

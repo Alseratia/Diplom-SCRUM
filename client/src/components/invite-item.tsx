@@ -47,9 +47,9 @@ export const InviteItem = ({
   });
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger className="grid h-[70px] w-[170px] place-content-center rounded-xl border border-neutral-700 px-3 py-2 text-neutral-200 transition-all duration-150 hover:scale-105">
+      <DialogTrigger className="grid h-[70px] w-[170px] place-content-center rounded-xl border border-neutral-700 px-3 py-2 text-neutral-950 transition-all duration-150 hover:scale-105">
         <div className="flex items-center gap-2">
-          <span className="rounded-full border border-white">
+          <span className="rounded-full border border-neutral-950">
             {invite.projectAvatar ? (
               <Image
                 src={invite.projectAvatar}
@@ -59,19 +59,19 @@ export const InviteItem = ({
                 className="rounded-full"
               />
             ) : (
-              <Activity color="#FFFFFF" />
+              <Activity color="#000" />
             )}
           </span>
           {invite.projectName}
         </div>
       </DialogTrigger>
-      <DialogContent className="flex flex-col gap-10 border border-neutral-800/60 bg-neutral-950 px-8 py-6">
-        <h3 className="text-md overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-neutral-200">
+      <DialogContent className="flex flex-col gap-10 border border-neutral-950/30 bg-neutral-200 px-8 py-6">
+        <h3 className="text-md overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-neutral-950">
           Приглашение в проект {invite.projectName}
         </h3>
-        <span className="text-sm text-neutral-500">
+        <span className="text-sm text-neutral-700">
           Ваша роль в проекте:{" "}
-          <span className=" text-white underline decoration-white underline-offset-2">
+          <span className=" text-black underline decoration-black underline-offset-2">
             {invite.role}
           </span>
         </span>

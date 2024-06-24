@@ -39,23 +39,21 @@ export const ProfileLink = ({ session }: { session: NonNullable<Session> }) => {
     if (userNotifications) {
       setNewNotifications(userNotifications);
     }
-  }, [userNotifications]);
 
-  if (session) {
     notificationsConnection.on(
       "NewNotification",
       (notification: WSNotification) => {
         setNewNotifications([...newNotifications, notification]);
       },
     );
-  }
+  }, [userNotifications]);
 
   return (
     <>
       <Button
         variant={"link"}
         onClick={() => setIsOpen(!isOpen)}
-        className="relative rounded-xl bg-transparent px-3 py-2 font-semibold text-neutral-200 hover:text-neutral-400 focus-visible:text-neutral-400"
+        className="relative rounded-xl bg-transparent px-3 py-2 font-semibold text-neutral-950 hover:text-neutral-400 focus-visible:text-neutral-400"
       >
         {newNotifications.length > 0 && (
           <span className="absolute right-2 top-1 flex size-4 items-center justify-center rounded-full border border-neutral-100 bg-red-400 p-2">
@@ -65,24 +63,24 @@ export const ProfileLink = ({ session }: { session: NonNullable<Session> }) => {
         <Bell />
       </Button>
       {isOpen && (
-        <div className="absolute right-14 top-14 z-30 flex max-h-[700px] w-[350px] flex-col items-center gap-4 rounded-xl border border-neutral-800/60 bg-neutral-950 p-3">
+        <div className="absolute right-14 top-14 z-30 flex max-h-[700px] w-[350px] flex-col items-center gap-4 rounded-xl border border-neutral-950/30 bg-neutral-300 p-3">
           {newNotifications.length > 0 ? (
             <>
               <div className="hidden-scrollbar max-h-[600px] space-y-2 overflow-y-scroll">
                 {newNotifications.map((notification, idx) => (
                   <div
                     key={idx}
-                    className={`${notification.isRead ? "bg-transparent" : "bg-neutral-800"} flex w-full cursor-default flex-col items-start gap-3 rounded-xl border border-neutral-800/60  px-3 py-2 text-neutral-200`}
+                    className={`${notification.isRead ? "bg-transparent" : "bg-neutral-400"} flex w-full cursor-default flex-col items-start gap-3 rounded-xl border border-neutral-950/30  px-3 py-2 text-neutral-950`}
                   >
                     <div className="flex items-center justify-center gap-20">
                       <span className="text-xs font-semibold">
                         {notification.title}
                       </span>
-                      <span className="text-xs text-neutral-400">
+                      <span className="text-xs text-neutral-900">
                         {new Date(notification.createdAt).toLocaleDateString()}
                       </span>
                     </div>
-                    <div className="text-balance text-sm text-neutral-300">
+                    <div className="text-balance text-sm text-neutral-800">
                       {notification.message}
                     </div>
                   </div>
@@ -96,13 +94,13 @@ export const ProfileLink = ({ session }: { session: NonNullable<Session> }) => {
                     token: session.token,
                   })
                 }
-                className="z-50 w-full bg-neutral-200 font-semibold"
+                className="z-50 w-full bg-neutral-950 font-semibold text-white"
               >
                 Очистить уведомления
               </Button>
             </>
           ) : (
-            <div className="text-neutral-200">Нет новых уведомлений</div>
+            <div className="text-neutral-950">Нет новых уведомлений</div>
           )}
         </div>
       )}

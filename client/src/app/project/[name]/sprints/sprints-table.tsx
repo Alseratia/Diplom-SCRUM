@@ -55,10 +55,10 @@ export const SprintsTable = ({
           onOpenChange={setIsCreateSprintDialogOpen}
         >
           <DialogTrigger className="flex h-[70px] w-[170px] items-center justify-center rounded-xl border border-neutral-700 px-3 py-2 transition-all duration-150 hover:scale-105">
-            <Plus color="#FFFFFF" />
+            <Plus color="#000" />
           </DialogTrigger>
-          <DialogContent className="flex flex-col gap-10 border border-neutral-800/60 bg-neutral-950 px-8 py-6">
-            <h2 className="text-3xl font-semibold text-neutral-100">
+          <DialogContent className="flex flex-col gap-10 border border-neutral-950/30 bg-neutral-200 px-8 py-6">
+            <h2 className="text-3xl font-semibold text-neutral-950">
               Создать новый спринт
             </h2>
             <Input
@@ -86,7 +86,7 @@ export const SprintsTable = ({
             <Link
               key={sprint.id}
               href={`/project/${projectName}/sprints/${sprint.name}`}
-              className="flex h-[70px] w-[170px] items-center justify-center rounded-xl border border-neutral-700 px-3 py-2 transition-all duration-150 hover:scale-105"
+              className="flex h-[70px] w-[170px] items-center justify-center rounded-xl border border-neutral-700 px-3 py-2 text-neutral-800 transition-all duration-150 hover:scale-105"
             >
               {sprint.name}
             </Link>

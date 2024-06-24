@@ -26,11 +26,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru" className={`${roboto.className}`}>
-      <body className="grid min-h-screen grid-rows-[64px,1fr] bg-foreground">
-        <Providers>
-          <Header />
-          {children}
-        </Providers>
+      <body>
+        <main className="grid h-screen grid-rows-[auto,1fr]">
+          <Providers>
+            <Header />
+            {children}
+          </Providers>
+        </main>
       </body>
     </html>
   );

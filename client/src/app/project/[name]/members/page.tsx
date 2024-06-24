@@ -14,7 +14,7 @@ export default async function ProjectMembersPage({
   return (
     <div className="flex flex-col gap-16 px-12 py-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-center text-2xl font-semibold text-neutral-200">
+        <h2 className="text-center text-2xl font-semibold text-neutral-950">
           Участники проекта {name}
         </h2>
         {session && <InviteButton token={session.token} projectName={name} />}

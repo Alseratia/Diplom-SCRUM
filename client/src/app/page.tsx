@@ -5,12 +5,12 @@ export const dynamic = "force-dynamic";
 
 export default function HomePage() {
   return (
-    <main className="px-12 py-6 text-red-400">
+    <div className="px-12">
       <PageContent>
         <div className="h-full">
           <ProjectsTable />
         </div>
       </PageContent>
-    </main>
+    </div>
   );
 }

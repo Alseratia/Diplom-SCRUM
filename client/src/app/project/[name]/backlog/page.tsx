@@ -15,10 +15,10 @@ export default async function ProjectBacklogPage({
 
   return (
     <div className="flex h-full flex-col gap-12 px-12 py-6">
-      <h2 className="text-center text-2xl font-semibold text-neutral-200">
+      <h2 className="text-center text-2xl font-semibold text-neutral-950">
         Бэклог {name.replaceAll("%20", " ")}
       </h2>
-      <span className="text-center text-xl font-medium text-neutral-300">
+      <span className="text-center text-xl font-medium text-neutral-800">
         Приоритет
       </span>
       <Board projectName={name} token={session.token} />

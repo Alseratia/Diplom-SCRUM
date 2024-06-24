@@ -62,7 +62,13 @@ export const AddCardForm = ({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const { title, text } = values;
-    void createUserStory({ title, projectName, text, token, priority: isAddingToColumnId as Priority });
+    void createUserStory({
+      title,
+      projectName,
+      text,
+      token,
+      priority: isAddingToColumnId as Priority,
+    });
     setIsAddingIsAddingToColumnId(undefined);
   }
 
@@ -74,14 +80,16 @@ export const AddCardForm = ({
         onSubmit={form.handleSubmit(onSubmit)}
         className="h-fit w-full space-y-3 rounded-xl border border-neutral-600 p-3"
       >
-        <h1 className="text-base font-bold text-slate-200">Добавить задачу</h1>
+        <h1 className="text-base font-bold text-neutral-800">
+          Добавить задачу
+        </h1>
 
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Имя задачи</FormLabel>
+              <FormLabel className="text-neutral-500">Имя задачи</FormLabel>
               <FormControl>
                 <Input
                   autoComplete="off"
@@ -100,7 +108,9 @@ export const AddCardForm = ({
           name="text"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Описание задачи</FormLabel>
+              <FormLabel className="text-neutral-500">
+                Описание задачи
+              </FormLabel>
               <FormControl>
                 <Input
                   autoComplete="off"
@@ -116,15 +126,13 @@ export const AddCardForm = ({
         />
         <div className="flex justify-center gap-3">
           <Button
-            onClick={() => {
-              return;
-            }}
-            className="w-[76px] text-xs hover:bg-neutral-800/80 hover:text-neutral-200"
+            onClick={() => setIsAddingIsAddingToColumnId(undefined)}
+            className="w-[76px] bg-neutral-200 text-xs text-neutral-950 hover:bg-neutral-300/90"
           >
             Закрыть
           </Button>
           <Button
-            className="w-[76px] bg-neutral-200 text-xs text-neutral-950 hover:bg-neutral-300/90"
+            className="w-[76px] text-xs hover:bg-neutral-800/80 hover:text-neutral-200"
             type="submit"
           >
             Добавить

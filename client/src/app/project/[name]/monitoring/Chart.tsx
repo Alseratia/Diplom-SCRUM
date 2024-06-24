@@ -27,7 +27,7 @@ const data = [
 export const Chart = ({}) => {
   return (
     <div className="flex items-center justify-center gap-10">
-      <Card className="border-neutral-800/60 bg-neutral-800 text-white">
+      <Card className="border-neutral-950/30 text-black">
         <CardHeader className=" text-center font-semibold ">
           Количество Story Points за спринт
         </CardHeader>
@@ -48,7 +48,7 @@ export const Chart = ({}) => {
 
               <Tooltip
                 content={(props) => (
-                  <div className="rounded-xl border border-neutral-800/60 bg-white/50 p-3">
+                  <div className="rounded-xl border border-neutral-950/30 bg-white/50 p-3">
                     {props.payload?.map((item, idx) => (
                       <div key={idx} className="flex flex-col gap-4">
                         <span className="text-semibold underline underline-offset-2">
@@ -70,10 +70,10 @@ export const Chart = ({}) => {
               />
             </LineChart>
           </ResponsiveContainer>
-          <span className="absolute bottom-12 right-2 font-medium text-neutral-200">
+          <span className="absolute bottom-12 right-2 font-medium text-neutral-400">
             Спринт
           </span>
-          <span className="absolute -top-8 left-4 font-medium text-neutral-200">
+          <span className="absolute -top-8 left-4 font-medium text-neutral-400">
             Story Points
           </span>
         </CardContent>

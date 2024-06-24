@@ -200,8 +200,8 @@ const Column = ({ cards, setCards, title, column }: ColumnProps) => {
   return (
     <div className="w-[200px] shrink-0">
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="font-medium">{title}</h3>
-        <span className="text-sm text-neutral-400">
+        <h3 className="font-medium text-neutral-800">{title}</h3>
+        <span className="text-sm text-neutral-700">
           {filteredCards.length ?? 0}
         </span>
       </div>
@@ -209,11 +209,12 @@ const Column = ({ cards, setCards, title, column }: ColumnProps) => {
         onDragOver={(e) => handleDragOver(e)}
         onDragLeave={() => handleDragLeave()}
         onDrop={(e) => handleDrop(e)}
-        className={`${active ? "bg-neutral-800/50" : "bg-neutral-800/0"} h-full w-full  p-1 transition-colors`}
+        className={`${active ? "bg-neutral-300/50" : "bg-neutral-800/0"} h-full w-full rounded-xl  p-1 transition-colors`}
       >
         {filteredCards.map((card) => (
           <TaskCard
             key={card.id}
+            token=""
             handleDragStart={handleDragStart}
             column={card.status}
             {...card}

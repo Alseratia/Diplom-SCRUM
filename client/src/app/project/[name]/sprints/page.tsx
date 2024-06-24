@@ -11,8 +11,8 @@ export default async function ProjectSprintsPage({
   const session = await getSession();
   return (
     <div className="flex h-full flex-col items-center justify-center gap-36">
-      <h2 className="text-center text-2xl font-semibold text-neutral-200">
-        {name} sprints
+      <h2 className="text-center text-2xl font-semibold text-neutral-950">
+        Спринты проекта {name}
       </h2>
       {session && <SprintsTable projectName={name} token={session.token} />}
     </div>

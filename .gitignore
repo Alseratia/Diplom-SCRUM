@@ -7,7 +7,7 @@ riderModule.iml
 .VSCodeCounter/
 
 # dependencies
-/node_modules
+client/node_modules
 /.pnp
 .pnp.js
 
@@ -20,7 +20,7 @@ riderModule.iml
 db.sqlite
 
 # next.js
-/.next/
+client/.next/
 /out/
 next-env.d.ts
 

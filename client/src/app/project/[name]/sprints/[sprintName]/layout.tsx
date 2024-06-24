@@ -39,12 +39,21 @@ export default async function SprintLayout({
       sprintName,
     }));
 
+  const isSidebarVisible =
+    session &&
+    tasks.length > 0 &&
+    userInfo &&
+    sprintInfo &&
+    sprintInfo.status !== "Planning";
+
+  console.log(sprintInfo?.status);
+
   return (
     <div
-      className={`${tasks.length > 0 ? "grid-cols-[1fr,minmax(20%,25rem)]" : ""} grid h-full`}
+      className={`${isSidebarVisible ? "grid-cols-[1fr,minmax(20%,25rem)]" : ""} grid h-full`}
     >
       {children}
-      {session && tasks.length > 0 && userInfo && sprintInfo && (
+      {isSidebarVisible && (
         <TasksSidebar
           projectTasks={tasks}
           sprintTasks={sprintTasks}

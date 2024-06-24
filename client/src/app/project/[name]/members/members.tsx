@@ -53,9 +53,9 @@ export const Members = ({
         filteredMembers.map((member) => (
           <div
             key={member.name}
-            className="flex items-center justify-between border-b border-neutral-800/60 py-2"
+            className="flex items-center justify-between border-b border-neutral-950/30 py-2"
           >
-            <div className="flex items-center gap-2 text-neutral-300">
+            <div className="flex items-center gap-2 text-neutral-700">
               <span className="rounded-full border border-white">
                 {member.avatar ? (
                   <Image
@@ -72,7 +72,7 @@ export const Members = ({
               <span>{member.name}</span>
             </div>
             <div className="flex items-center justify-center gap-10">
-              <div className="text-neutral-200">{member.role}</div>
+              <div className="text-neutral-500">{member.role}</div>
               <Button
                 variant={"destructive"}
                 onClick={() =>

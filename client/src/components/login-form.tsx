@@ -69,7 +69,9 @@ export function LoginForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-[30rem] space-y-8 rounded-xl border border-neutral-600 px-10 py-6"
       >
-        <h1 className="text-2xl font-bold text-slate-200">Login</h1>
+        <h1 className="text-2xl font-bold text-neutral-950">
+          {isLoginPage ? "Войти в систему" : "Зарегистрироваться"}
+        </h1>
 
         <FormField
           control={form.control}
@@ -103,7 +105,7 @@ export function LoginForm() {
           {isLoginPage && (
             <Link
               href={"/auth/register"}
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-neutral-200 underline ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-neutral-950 underline ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
             >
               Зарегистрироваться
             </Link>

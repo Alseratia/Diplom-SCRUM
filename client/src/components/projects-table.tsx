@@ -19,11 +19,9 @@ export async function ProjectsTable({}) {
     token: session.token,
   });
 
-  console.log(invites);
-
   return (
-    <div className=" flex h-full flex-col items-center justify-center gap-36">
-      <h2 className="text-center text-4xl text-neutral-200">Мои проекты</h2>
+    <div className="flex h-full flex-col items-center justify-center gap-36">
+      <h2 className="text-center text-4xl text-neutral-950">Мои проекты</h2>
       <div className="flex max-w-5xl flex-wrap items-center justify-center gap-8">
         <CreateProject token={session.token} />
         {projects &&
@@ -33,7 +31,7 @@ export async function ProjectsTable({}) {
       </div>
       {invites && invites.length > 0 && (
         <>
-          <h2 className="text-center text-4xl text-neutral-200">Приглашения</h2>
+          <h2 className="text-center text-4xl text-neutral-950">Приглашения</h2>
           <div className="flex max-w-5xl flex-wrap items-center justify-center gap-8">
             {invites.map((invite) => (
               <InviteItem

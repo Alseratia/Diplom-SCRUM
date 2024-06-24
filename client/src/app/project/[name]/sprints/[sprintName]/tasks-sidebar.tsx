@@ -90,17 +90,17 @@ export const TasksSidebar = ({
   }, [userInfo]);
 
   return (
-    <div className="h-full border-l border-neutral-800/60 px-8 py-6">
+    <div className="h-full border-l border-neutral-950/30 px-8 py-6">
       {isPlanning && (
         <>
-          <h2 className="pb-6 text-2xl font-semibold text-neutral-200">
+          <h2 className="pb-6 text-2xl font-semibold text-neutral-950">
             Задачи бэклога
           </h2>
           <ul className="grid gap-4">
             {projectTasks.map((task) => (
               <div
                 key={task.id}
-                className="flex items-center justify-between rounded-xl px-3 py-2 text-neutral-200 outline outline-1 outline-neutral-800 transition-colors duration-150 hover:text-neutral-300 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-neutral-800/60"
+                className="flex cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-neutral-950 outline outline-1 outline-neutral-300 transition-colors duration-150 hover:text-neutral-300 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-neutral-800/60"
               >
                 <span>{task.title}</span>
                 <button
@@ -114,7 +114,7 @@ export const TasksSidebar = ({
                   }
                   className="rounded-full border border-white transition-transform duration-150 hover:scale-105 focus-visible:scale-105"
                 >
-                  <Plus color="#FFFFFF" size={20} />
+                  <Plus color="#000" size={20} />
                 </button>
               </div>
             ))}
@@ -124,21 +124,21 @@ export const TasksSidebar = ({
       {!isPlanning && (
         <div className="flex h-full flex-col">
           <div className="flex-1">
-            <h2 className="pb-6 text-2xl font-semibold text-neutral-200">
+            <h2 className="pb-6 text-2xl font-semibold text-neutral-950">
               Покер-планирование
             </h2>
             {activeTask && (
               <div className="grid gap-4">
                 <div className="flex gap-2 font-medium text-neutral-400">
                   Оценка задачи:
-                  <span className="font-semibold text-white">
+                  <span className="font-semibold text-black">
                     {activeTask.title}
                   </span>
                 </div>
                 {channelMembers.length > 0 && (
                   <div>
                     {channelMembers.map((member) => (
-                      <div className="text-white" key={member.userId}>
+                      <div className="text-neutral-800" key={member.userId}>
                         {member.name}
                       </div>
                     ))}
@@ -148,7 +148,7 @@ export const TasksSidebar = ({
                   {MARKS.map((mark) => (
                     <button
                       onClick={() => setCurrentMark(mark)}
-                      className={`${currentMark === mark ? "bg-emerald-500 font-semibold" : ""} flex h-16 w-24 items-center justify-center rounded-xl border border-neutral-800/60 px-3 py-2 text-xs hover:border-neutral-800 focus-visible:border-neutral-800`}
+                      className={`${currentMark === mark ? "bg-emerald-500 font-semibold" : ""} flex h-16 w-24 items-center justify-center rounded-xl border border-neutral-950/30 px-3 py-2 text-xs text-neutral-700 hover:border-neutral-800 focus-visible:border-neutral-800`}
                       key={mark}
                     >
                       {mark}
@@ -159,12 +159,12 @@ export const TasksSidebar = ({
             )}
           </div>
           {sprintTasks.length > 0 && (
-            <div className="flex flex-wrap justify-end gap-3 border-t border-neutral-800/60">
+            <div className="flex flex-wrap justify-center gap-3 border-t border-neutral-950/30 py-3">
               {sprintTasks.map((task) => (
                 <button
                   onClick={() => setActiveTask(task)}
                   key={task.id}
-                  className="bg-red-400 text-white"
+                  className="rounded-xl border border-neutral-950/30 px-3 py-2 text-neutral-800"
                 >
                   {task.title}
                 </button>

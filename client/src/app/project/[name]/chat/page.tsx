@@ -18,7 +18,7 @@ export default async function ProjectChatPage({
 
   return (
     <div className="flex h-full flex-col items-center gap-16 px-12 py-6">
-      <h2 className="text-center text-2xl font-semibold text-neutral-200">
+      <h2 className="text-center text-2xl font-semibold text-neutral-950">
         Чат проекта {name}
       </h2>
       {session && <Chat projectName={name} session={session} user={user} />}

@@ -64,7 +64,7 @@ export const Board: FC<BoardProps> = ({ projectName, token }) => {
           />
         ) : (
           <Button
-            className="flex w-full items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs text-neutral-400/80 hover:text-neutral-100"
+            className="flex w-full items-center gap-1.5 rounded-xl bg-neutral-300 px-3 py-1.5 text-xs text-neutral-700 hover:text-neutral-100"
             onClick={() => setIsAddingIsAddingToColumnId("Minor")}
           >
             <span>Добавить задачу</span>
@@ -89,7 +89,7 @@ export const Board: FC<BoardProps> = ({ projectName, token }) => {
           />
         ) : (
           <Button
-            className="flex w-full items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs text-neutral-400/80 hover:text-neutral-100"
+            className="flex w-full items-center gap-1.5 rounded-xl bg-neutral-300 px-3 py-1.5 text-xs text-neutral-700 hover:text-neutral-100"
             onClick={() => setIsAddingIsAddingToColumnId("Low")}
           >
             <span>Добавить задачу</span>
@@ -114,7 +114,7 @@ export const Board: FC<BoardProps> = ({ projectName, token }) => {
           />
         ) : (
           <Button
-            className="flex w-full items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs text-neutral-400/80 hover:text-neutral-100"
+            className="flex w-full items-center gap-1.5 rounded-xl bg-neutral-300 px-3 py-1.5 text-xs text-neutral-700 hover:text-neutral-100"
             onClick={() => setIsAddingIsAddingToColumnId("Medium")}
           >
             <span>Добавить задачу</span>
@@ -139,7 +139,7 @@ export const Board: FC<BoardProps> = ({ projectName, token }) => {
           />
         ) : (
           <Button
-            className="flex w-full items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs text-neutral-400/80 hover:text-neutral-100"
+            className="flex w-full items-center gap-1.5 rounded-xl bg-neutral-300 px-3 py-1.5 text-xs text-neutral-700 hover:text-neutral-100"
             onClick={() => setIsAddingIsAddingToColumnId("High")}
           >
             <span>Добавить задачу</span>
@@ -164,7 +164,7 @@ export const Board: FC<BoardProps> = ({ projectName, token }) => {
           />
         ) : (
           <Button
-            className="flex w-full items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs text-neutral-400/80 hover:text-neutral-100"
+            className="flex w-full items-center gap-1.5 rounded-xl bg-neutral-300 px-3 py-1.5 text-xs text-neutral-700 hover:text-neutral-100"
             onClick={() => setIsAddingIsAddingToColumnId("Critical")}
           >
             <span>Добавить задачу</span>
@@ -310,10 +310,10 @@ const Column = ({
 
   const filteredCards = cards.filter((card) => card.priority === column);
   return (
-    <div className="w-[200px] shrink-0">
+    <div className="w-[200px] shrink-0 ">
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="font-medium">{title}</h3>
-        <span className="text-sm text-neutral-400">
+        <h3 className="font-medium text-neutral-950">{title}</h3>
+        <span className="text-sm text-neutral-800">
           {filteredCards.length ?? 0}
         </span>
       </div>
@@ -321,7 +321,7 @@ const Column = ({
         onDragOver={(e) => handleDragOver(e)}
         onDragLeave={() => handleDragLeave()}
         onDrop={(e) => handleDrop(e)}
-        className={`${active ? "bg-neutral-800/50" : "bg-neutral-800/0"} h-full w-full  p-1 transition-colors`}
+        className={`${active ? "bg-neutral-300/50" : "bg-neutral-800/0"} h-full w-full rounded-xl  p-1 transition-colors`}
       >
         {filteredCards.map((card) => (
           <TaskCard

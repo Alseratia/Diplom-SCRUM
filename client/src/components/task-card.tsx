@@ -79,20 +79,20 @@ export const TaskCard = ({
         layoutId={id}
         //@ts-expect-error
         onDragStart={(e) => handleDragStart({ e, card: { title, column, id } })}
-        className="flex cursor-grab items-center justify-between rounded-xl border border-neutral-800/60 bg-neutral-900/30 p-3 active:cursor-grabbing"
+        className="flex cursor-grab items-center justify-between rounded-xl border border-neutral-950/30 bg-neutral-300/30 p-3 active:cursor-grabbing"
       >
-        <p className="text-sm text-neutral-300">{title}</p>
+        <p className="text-sm text-neutral-950">{title}</p>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger>
             <Settings color="#cacaca" size={20} />
           </DialogTrigger>
-          <DialogContent className="flex flex-col gap-10 border border-neutral-800/60 bg-neutral-950 px-8 py-6">
-            <h2 className="text-xl font-semibold text-neutral-300">
+          <DialogContent className="flex flex-col gap-10 border border-neutral-950/30 bg-neutral-200 px-8 py-6">
+            <h2 className="text-xl font-semibold text-neutral-950">
               Ивенты задачи <span className="text-neutral-200">{title}</span>
             </h2>
             {tasks.map((task) => (
               <ul key={task.id} className="flex items-center gap-2">
-                <li className="flex w-full items-center justify-between gap-4 text-neutral-300">
+                <li className="flex w-full items-center justify-between gap-4 text-neutral-700">
                   <div className="flex items-center justify-center gap-2">
                     <Checkbox />
                     <span>{task.title}</span>
@@ -113,7 +113,7 @@ export const TaskCard = ({
                 </li>
               </ul>
             ))}
-            <div className="flex w-full gap-4 border-t border-neutral-800/60 p-6">
+            <div className="flex w-full gap-4 border-t border-neutral-950/30 p-6">
               <Input
                 placeholder="Название задачи"
                 value={input}

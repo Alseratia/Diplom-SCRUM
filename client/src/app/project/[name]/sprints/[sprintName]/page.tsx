@@ -24,20 +24,19 @@ export default async function ProjectSprintPage({
   return (
     <div className="flex h-full flex-col gap-12 px-12  py-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold text-neutral-200">
-          Спринт {sprintName.replaceAll("%20", " ")}
-        </h2>
+        <h2 className="text-2xl font-semibold text-neutral-950">Спринт</h2>
         <div className="flex items-center justify-center gap-4">
-          {session && sprintInfo && !sprintInfo.start && (
-            // sprintInfo.status === "WaitStart" &&
-            <StartSprintButton
-              token={session.token}
-              projectName={name}
-              sprintName={sprintName}
-            />
-          )}
-          {session && (
-            // sprintInfo?.status === "Planning" &&
+          {session &&
+            sprintInfo &&
+            !sprintInfo.start &&
+            sprintInfo.status === "WaitStart" && (
+              <StartSprintButton
+                token={session.token}
+                projectName={name}
+                sprintName={sprintName}
+              />
+            )}
+          {session && sprintInfo?.status === "Planning" && (
             <PockerPlanningButton />
           )}
         </div>

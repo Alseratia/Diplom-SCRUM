@@ -13,7 +13,7 @@ export const PageContent = ({
         <div className="grid h-full place-content-center">
           <Link
             href={"/auth/login"}
-            className="rounded-md border border-neutral-800/60 px-10 py-6 text-neutral-200"
+            className="rounded-md border border-neutral-950/30 px-10 py-6 text-neutral-200"
           >
             Авторизоваться
           </Link>

@@ -43,7 +43,7 @@ export const StartSprintButton = ({
       <DialogTrigger className="rounded-xl bg-emerald-600 px-3 py-2 text-neutral-200 transition-colors duration-150 hover:bg-emerald-700 focus-visible:bg-emerald-600 ">
         Запланировать спринт
       </DialogTrigger>
-      <DialogContent className="flex flex-col gap-10 border border-neutral-800/60 bg-neutral-950 px-8 py-6">
+      <DialogContent className="flex flex-col gap-10 border border-neutral-950/30 bg-neutral-950 px-8 py-6">
         <h2 className="text-3xl font-semibold text-neutral-100">
           Запланировать спринт
         </h2>

@@ -47,11 +47,11 @@ export const InviteButton = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="flex  items-center justify-center rounded-xl border border-neutral-800/60 px-3 py-2 transition-all duration-150 hover:bg-neutral-800/30 hover:text-neutral-100">
+      <DialogTrigger className="flex  items-center justify-center rounded-xl border border-neutral-950/30 px-3 py-2 text-neutral-700 transition-all duration-150 hover:bg-neutral-800/30 hover:text-neutral-100">
         Добавить участника
       </DialogTrigger>
-      <DialogContent className="flex flex-col gap-10 border border-neutral-800/60 bg-neutral-950 px-8 py-6">
-        <h2 className="text-3xl font-semibold text-neutral-100">
+      <DialogContent className="flex flex-col gap-10 border border-neutral-950/30 bg-neutral-200 px-8 py-6">
+        <h2 className="text-3xl font-semibold text-neutral-950">
           Добавить участника
         </h2>
 
